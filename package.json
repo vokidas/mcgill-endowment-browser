@@ -1,0 +1,27 @@
+{
+  "name": "mcgill-endowment-browser",
+  "version": "0.1.0",
+  "description": "McGill fossil fuel investment browser.",
+  "author": "Igor Sadikov",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.3",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
+  },
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node server.js",
+    "client": "node start-client.js",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.0",
+    "eslint": "^4.5.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
+  }
+}
