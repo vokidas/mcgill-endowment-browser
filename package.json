@@ -6,12 +6,11 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.15.3",
-    "passport": "^0.3.2",
-    "passport-local": "^1.0.0"
+    "sqlite3": "^3.1.9"
   },
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "node server.js",
+    "server": "node server/app.js",
     "client": "node start-client.js",
     "lint": "eslint ."
   },
