@@ -33,9 +33,6 @@ function getValues (options) {
       options.valueRenderOption = 'UNFORMATTED_VALUE'
       options.auth = authClient
 
-      console.log(spreadsheetId)
-      console.log(typeof authClient, authClient)
-
       return new Promise((resolve, reject) => {
         sheets.spreadsheets.values.get(options, (err, response) =>
           err ? reject(err) : resolve(response.values))

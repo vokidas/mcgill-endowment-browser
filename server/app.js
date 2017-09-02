@@ -1,8 +1,18 @@
 const express = require('express')
+const sheet = require('./sheet')
 
 const app = express()
 
+function error (err, res) {
+  console.error(err)
+  res.status(500).send(err)
+}
+
 app.set('port', process.env.PORT || 3001)
+
+if (process.env.NODE_ENV === 'development') {
+  app.set('json spaces', 2)
+}
 
 // Express only serves static assets in production
 if (process.env.NODE_ENV === 'production') {
@@ -10,7 +20,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.get('/api/holdings', (req, res) => {
-  res.json([])
+  sheet.getValues({ range: 'Holdings', majorDimension: 'ROWS' })
+    .then(values => res.json(values))
+    .catch(err => error(err, res))
 })
 
 app.listen(app.get('port'), () => {

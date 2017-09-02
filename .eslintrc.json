@@ -1,4 +1,7 @@
 {
 	"extends": "standard",
-	"root": true
+	"root": true,
+    "rules": {
+        "no-console": [1, { "allow": ["info", "warn", "error"] }]
+    }
 }
