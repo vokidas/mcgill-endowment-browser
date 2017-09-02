@@ -6,12 +6,15 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.15.3",
+    "googleapis": "^21.3.0",
+    "node-cache": "^4.1.1",
     "sqlite3": "^3.1.9"
   },
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "node server/app.js",
     "client": "node start-client.js",
+    "setup": "node setup-db.js",
     "lint": "eslint ."
   },
   "devDependencies": {
@@ -23,7 +26,7 @@
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1"
   },
-  "eslintIgnore": {
+  "eslintIgnore": [
     "client/node_modules/*"
-  }
+  ]
 }

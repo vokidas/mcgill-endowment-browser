@@ -5,7 +5,8 @@ const table = 'settings'
 function get (key) {
   return database.open()
     .then(db => db.getRow(table, 'key', key))
-    .then(row => row ? row.value : null)
+    .then(row => row ? Promise.resolve(row.value)
+      : Promise.reject(new Error(`${key} is not set`)))
 }
 
 function set (key, value) {

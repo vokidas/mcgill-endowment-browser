@@ -1,18 +1,19 @@
 const sqlite = require('sqlite3')
+const path = require('path')
 
-const filename = 'settings.db'
+const filename = path.resolve(__dirname, '../settings.db')
 const wrapper = { db: null }
 
 wrapper.createTable = (table, columns) => {
-  return new Promise((resolve, reject) => this.db.run(
+  return new Promise((resolve, reject) => wrapper.db.run(
     `create table if not exists ${table} (${columns.join()})`,
     [],
-    err => err ? reject(err) : resolve(this.db)
+    err => err ? reject(err) : resolve(wrapper.db)
   ))
 }
 
 wrapper.getRow = (table, key, value) => {
-  return new Promise((resolve, reject) => this.db.get(
+  return new Promise((resolve, reject) => wrapper.db.get(
     `select * from ${table} where ${key} = ?`,
     [ value ],
     (err, row) => err ? reject(err) : resolve(row)
@@ -21,7 +22,7 @@ wrapper.getRow = (table, key, value) => {
 
 wrapper.insertRow = (table, fields) => {
   const placeholders = Array(fields.length).fill('?')
-  return new Promise((resolve, reject) => this.db.run(
+  return new Promise((resolve, reject) => wrapper.db.run(
     `insert or replace into ${table} values (${placeholders.join()})`,
     fields,
     err => err ? reject(err) : resolve()

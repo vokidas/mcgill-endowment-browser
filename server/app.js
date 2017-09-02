@@ -14,5 +14,5 @@ app.get('/api/holdings', (req, res) => {
 })
 
 app.listen(app.get('port'), () => {
-  console.info('Listening on http://localhost:' + app.get('port')) // eslint-disable-line no-console
+  console.info(`Listening on http://localhost:${app.get('port')}`)
 })
