@@ -10,24 +10,19 @@ function get (key) {
     cache.get(key, (err, value) => {
       if (err) {
         console.error(err)
-        return reject(err)
+        reject(err)
+      } else if (value === void 0) {
+        reject(new Error(`${key} is not in cache`))
+      } else {
+        resolve(value)
       }
-
-      value === void 0 ? reject(value) : resolve(value)
     })
   })
 }
 
 function set (key, value) {
-  return new Promise((resolve, reject) => {
-    cache.set(key, value, err => {
-      if (err) {
-        console.error(err)
-      }
-
-      resolve(value)
-    })
-  })
+  cache.set(key, value, err => err && console.error(err))
+  return value
 }
 
 module.exports = {
