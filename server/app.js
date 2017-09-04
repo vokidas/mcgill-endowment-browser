@@ -1,11 +1,11 @@
 const express = require('express')
-const sheet = require('./sheet')
+const holdings = require('./holdings')
 
 const app = express()
 
 function error (err, res) {
   console.error(err)
-  res.status(500).send(err)
+  res.sendStatus(500)
 }
 
 app.set('port', process.env.PORT || 3001)
@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.get('/api/holdings', (req, res) => {
-  sheet.getValues({ range: 'Holdings', majorDimension: 'ROWS' })
+  holdings.get()
     .then(values => res.json(values))
     .catch(err => error(err, res))
 })

@@ -25,7 +25,4 @@ function set (key, value) {
   return value
 }
 
-module.exports = {
-  get: get,
-  set: set
-}
+module.exports = { get: get, set: set }

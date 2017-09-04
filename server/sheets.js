@@ -17,13 +17,15 @@ async function authorize () {
   })
 }
 
-async function getValues (options) {
+async function getValues (spreadsheetId, sheetName) {
   const authClient = await cache.get('auth-client').catch(authorize)
-  const spreadsheetId = await settings.get('spreadsheet-id')
-
-  options.spreadsheetId = spreadsheetId
-  options.valueRenderOption = 'UNFORMATTED_VALUE'
-  options.auth = authClient
+  const options = {
+    spreadsheetId: spreadsheetId,
+    auth: authClient,
+    valueRenderOption: 'UNFORMATTED_VALUE',
+    majorDimension: 'ROWS',
+    range: `${sheetName}`
+  }
 
   return new Promise((resolve, reject) => {
     sheets.spreadsheets.values.get(options, (err, response) =>
@@ -31,6 +33,4 @@ async function getValues (options) {
   })
 }
 
-module.exports = {
-  getValues: getValues
-}
+module.exports = { getValues: getValues }
