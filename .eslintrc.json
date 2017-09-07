@@ -4,6 +4,8 @@
 	"root": true,
     "rules": {
         "jsx-quotes": ["error", "prefer-double"],
-        "no-console": ["warn", { "allow": ["info", "warn", "error"] }]
-    }
+        "no-console": ["warn", { "allow": ["info", "warn", "error"] }],
+        "react/prop-types": "off"
+    },
+    "globals": { "fetch": false }
 }

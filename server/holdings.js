@@ -1,5 +1,6 @@
 const sheets = require('./sheets')
 const settings = require('./settings')
+const cache = require('./cache')
 
 async function getRaw () {
   const spreadsheetId = await settings.get('raw-spreadsheet-id')
@@ -70,13 +71,26 @@ function parse (values) {
     return holding
   }
 
-  return Object.values(
+  return Object.entries(
     values.slice(1) // ignore header row
       .map(createHolding)
       .reduce(groupingReducer, {})
-  )
+  ).map(([ name, holdings ]) => ({
+    name: name,
+    holdings: holdings,
+    id: holdings[0].id,
+    assetType: holdings[0].assetType,
+    assetCategory: holdings[0].assetCategory,
+    marketValue: holdings.reduce((sum, h) => sum + h.marketValue, 0)
+  }))
 }
 
-module.exports = {
-  get: () => getRaw().then(parse)
+async function get () {
+  try {
+    return await cache.get('parsed-holdings')
+  } catch (err) {
+    return cache.set('parsed-holdings', parse(await getRaw()))
+  }
 }
+
+module.exports = { get: get }

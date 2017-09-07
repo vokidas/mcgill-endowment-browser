@@ -1,0 +1,75 @@
+[
+  {
+    "name": "Military",
+    "icon": "military",
+    "harmful": true,
+    "match": {
+      "assetType": [
+        "AEROSPACE/DEFENSE",
+        "DEFENSE - UK"
+      ]
+    }
+  },
+  {
+    "name": "Oil & Gas",
+    "icon": "industry",
+    "harmful": true,
+    "match": {
+      "assetType": [
+        "ENERGY (CANADIAN)",
+        "INTEGRATED OIL & GAS - UK",
+        "OIL & GAS",
+        "OIL & GAS SERVICES",
+        "GAS"
+      ]
+    }
+  },
+  {
+    "name": "Mining",
+    "icon": "wrench",
+    "harmful": true,
+    "match": {
+      "assetType": [
+        "GENERAL MINING - UK",
+        "GOLD MINING - UK",
+        "MINING"
+      ]
+    }
+  },
+  {
+    "name": "Alternative Energy",
+    "icon": "sun",
+    "match": {
+      "assetType": [
+        "ENERGY - ALTERNATE SOURCES"
+      ]
+    }
+  },
+  {
+    "name": "Banking",
+    "icon": "credit card",
+    "match": {
+      "assetType": [
+        "BANKS",
+        "BANKS - UK",
+        "BANKS (CANADIAN)",
+        "SAVINGS & LOANS",
+        "CONSUMER FINANCE - UK",
+        "INVESTMENT COMPANIES",
+        "INVESTMENT SERVICES - UK"
+      ]
+    }
+  },
+  {
+    "name": "Palestine Occupation",
+    "icon": "flag",
+    "harmful": true,
+    "match": {
+      "ticker": [
+        "LLL",
+        "MZTF",
+        "RMAX"
+      ]
+    }
+  }
+]
