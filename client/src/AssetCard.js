@@ -1,18 +1,29 @@
 import React, { Component } from 'react'
-import { Card } from 'semantic-ui-react'
+import { Card, Icon } from 'semantic-ui-react'
 
 class AssetCard extends Component {
   render () {
+    const holding = this.props.data
+    const metadata = holding.metadata && holding.metadata.link &&
+      <Card.Content extra>
+        <Icon name="info" />
+        <a href={holding.metadata.link}>
+          Read Divest McGill's dossier.
+        </a>
+      </Card.Content>
+
     return (
       <Card>
         <Card.Content>
-          <Card.Header>{this.props.data.name}</Card.Header>
-          <Card.Meta>{this.props.data.marketValue}</Card.Meta>
+          <Card.Header>{holding.name}</Card.Header>
+          <Card.Meta>{holding.holdings[0].ticker}</Card.Meta>
+          <Card.Meta>{holding.marketValue}</Card.Meta>
           <Card.Description>
-            {this.props.data.holdings.map(h =>
+            {holding.holdings.map(h =>
               <div key={h.id}>{`${h.description1} ${h.description2}`}</div>)}
           </Card.Description>
         </Card.Content>
+        {metadata}
       </Card>
     )
   }

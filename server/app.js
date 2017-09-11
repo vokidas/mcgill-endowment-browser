@@ -1,5 +1,6 @@
 const express = require('express')
 const holdings = require('./holdings')
+const metadata = require('./metadata')
 
 const app = express()
 
@@ -21,6 +22,12 @@ if (process.env.NODE_ENV === 'production') {
 
 app.get('/api/holdings', (req, res) => {
   holdings.get()
+    .then(values => res.json(values))
+    .catch(err => error(err, res))
+})
+
+app.get('/api/metadata', (req, res) => {
+  metadata.get()
     .then(values => res.json(values))
     .catch(err => error(err, res))
 })

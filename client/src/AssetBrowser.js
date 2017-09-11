@@ -22,7 +22,6 @@ class AssetBrowser extends Component {
 
   render () {
     const view = views[this.state.activeViewIndex]
-    console.log(view)
     const holdings = this.state.store
       ? this.state.store.applyView(view) : []
 

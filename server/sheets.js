@@ -33,4 +33,37 @@ async function getValues (spreadsheetId, sheetName) {
   })
 }
 
-module.exports = { getValues: getValues }
+function parseValues (values, headings) {
+  // map column headings to object field names (undefined if dne)
+  const fields = values[0].map(heading => headings[heading.trim()])
+
+  const createObject = (row, i) => {
+    const object = { id: i }
+
+    // set field value for each field not undefined
+    fields.forEach((field, i) => {
+      if (field !== void 0) {
+        object[field] = row[i]
+      }
+    })
+
+    // if there is a ticker field, convert it to string
+    if (typeof object.ticker === 'number') {
+      object.ticker = object.ticker.toString()
+
+      while (object.ticker.length < 4) {
+        object.ticker = '0' + object.ticker
+      }
+    }
+
+    return object
+  }
+
+  // ignore header row
+  return values.slice(1).map(createObject)
+}
+
+module.exports = {
+  getValues: getValues,
+  parseValues: parseValues
+}
