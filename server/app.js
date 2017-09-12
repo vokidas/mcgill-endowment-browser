@@ -1,6 +1,7 @@
 const express = require('express')
 const holdings = require('./holdings')
 const metadata = require('./metadata')
+const descriptions = require('./descriptions')
 
 const app = express()
 
@@ -29,6 +30,12 @@ app.get('/api/holdings', (req, res) => {
 app.get('/api/metadata', (req, res) => {
   metadata.get()
     .then(values => res.json(values))
+    .catch(err => error(err, res))
+})
+
+app.get('/api/descriptions', (req, res) => {
+  descriptions.get(req.query.tickers.split(','))
+    .then(obj => res.json(obj))
     .catch(err => error(err, res))
 })
 
