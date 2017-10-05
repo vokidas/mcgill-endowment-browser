@@ -1,35 +1,44 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Menu, Icon } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
-function ViewItem (props) {
-  const { view, ...other } = props
-
+function ViewItem ({ view, ...rest }) {
   return (
-    <Menu.Item as="a" {...other}>
+    <Menu.Item as="a" {...rest}>
       <Icon name={view.icon} />
       {view.name}
     </Menu.Item>
   )
 }
 
-class ViewSelector extends Component {
-  makeViewItem = (view, i) => {
+function ViewSelector ({ views, activeViewIndex, makeViewItemOnClick }) {
+  const renderViewItem = (view, index) => {
     const props = {
-      active: this.props.activeIndex === i,
-      view: view,
-      onClick: () => this.props.setActiveIndex(i)
+      active: activeViewIndex === index,
+      onClick: makeViewItemOnClick(index),
+      view
     }
 
-    return <ViewItem key={i} {...props} />
+    return <ViewItem {...props} />
   }
 
-  render () {
-    return (
-      <Menu secondary fluid pointing vertical>
-        {this.props.views.map(this.makeViewItem)}
-      </Menu>
-    )
-  }
+  return (
+    <Menu secondary fluid pointing vertical>
+      {views.map(renderViewItem)}
+    </Menu>
+  )
 }
 
-export default ViewSelector
+const mapStateToProps = ({ activeViewIndex, views }) => ({
+  activeViewIndex,
+  views
+})
+
+const mapDispatchToProps = (dispatch, { index }) => ({
+  makeViewItemOnClick: index => () => dispatch({
+    type: 'SELECT_VIEW',
+    index
+  })
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewSelector)

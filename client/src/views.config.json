@@ -1,5 +1,9 @@
 [
   {
+    "name": "All",
+    "icon": "content"
+  },
+  {
     "name": "Military",
     "icon": "military",
     "harmful": true,

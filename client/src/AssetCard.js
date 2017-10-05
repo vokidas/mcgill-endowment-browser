@@ -1,8 +1,39 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Card, Icon } from 'semantic-ui-react'
 
-class AssetCard extends Component {
-  render () {
+const { Content, Header, Meta, Description } = Card
+
+function renderHolding (holding) {
+  return (
+    <div key={holding.id}>
+      {holding.description1 + ' ' + holding.description2}
+    </div>
+  )
+}
+
+function AssetCard (props) {
+  const { asset } = props
+  const formattedValue = '$' + asset.marketValue.toFixed(2)
+    .replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
+
+  return (
+    <Card>
+      <Content>
+        <Header>{asset.name}</Header>
+        <Meta>
+          {asset.country + ' \u00b7 '}
+          <span className="market-value">{formattedValue}</span>
+        </Meta>
+      </Content>
+      <Content>
+        <Description>
+          {asset.holdings.map(renderHolding)}
+        </Description>
+      </Content>
+    </Card>
+  )
+
+  /*
     const holding = this.props.data
     const metadata = holding.metadata && holding.metadata.link &&
       <Card.Content extra>
@@ -26,7 +57,7 @@ class AssetCard extends Component {
         {metadata}
       </Card>
     )
-  }
+  */
 }
 
 export default AssetCard

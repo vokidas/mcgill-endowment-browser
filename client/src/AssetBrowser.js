@@ -1,43 +1,40 @@
 import React, { Component } from 'react'
-import { Container, Grid, Card } from 'semantic-ui-react'
+import { Container, Grid } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 import ViewSelector from './ViewSelector'
-import AssetCard from './AssetCard'
-import store from './store'
-import views from './views.config.json'
+import AssetCardGroup from './AssetCardGroup'
+import { initialize } from './store'
 
 class AssetBrowser extends Component {
-  state = {
-    activeViewIndex: 0,
-    store: null
-  }
-
   componentDidMount () {
-    store.initialize()
-      .then(store => this.setState({ store: store }))
+    this.props.onMount()
   }
 
-  setActiveIndex = index => {
-    this.setState({ activeViewIndex: index })
+  renderContent () {
+    const { readyState, error } = this.props
+
+    switch (readyState) {
+      case 'REQUEST_LOADING':
+        return 'Loading...'
+      case 'REQUEST_READY':
+        return <AssetCardGroup />
+      case 'REQUEST_FAILED':
+        return `Error: ${error}`
+      case 'REQUEST_UNSENT':
+      default:
+        return false
+    }
   }
 
   render () {
-    const view = views[this.state.activeViewIndex]
-    const holdings = this.state.store
-      ? this.state.store.applyView(view) : []
-
     return (
       <Container>
         <Grid stackable>
           <Grid.Column width={5}>
-            <ViewSelector
-              views={views}
-              activeIndex={this.state.activeViewIndex}
-              setActiveIndex={this.setActiveIndex} />
+            <ViewSelector />
           </Grid.Column>
           <Grid.Column width={9}>
-            <Card.Group itemsPerRow={1}>
-              {holdings.map(d => <AssetCard data={d} key={d.id} />)}
-            </Card.Group>
+            {this.renderContent()}
           </Grid.Column>
         </Grid>
       </Container>
@@ -45,4 +42,10 @@ class AssetBrowser extends Component {
   }
 }
 
-export default AssetBrowser
+const mapStateToProps = ({ init }) => init
+
+const mapDispatchToProps = dispatch => ({
+  onMount: () => dispatch(initialize())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AssetBrowser)

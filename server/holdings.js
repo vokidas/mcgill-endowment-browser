@@ -31,6 +31,18 @@ function groupingReducer (grouped, holding) {
   return grouped
 }
 
+function wrapGroup ([ key, holdings ]) {
+  return {
+    name: key,
+    holdings: holdings,
+    id: holdings[0].id,
+    assetType: holdings[0].assetType,
+    assetCategory: holdings[0].assetCategory,
+    country: holdings[0].country,
+    marketValue: holdings.reduce((sum, h) => sum + h.marketValue, 0)
+  }
+}
+
 function parse (values) {
   const headings = {
     'Reporting Account Name': 'account',
@@ -45,17 +57,10 @@ function parse (values) {
     'Market Value': 'marketValue'
   }
 
-  return Object.entries(
-    sheets.parseValues(values, headings)
-      .reduce(groupingReducer, {})
-  ).map(([ name, holdings ]) => ({
-    name: name,
-    holdings: holdings,
-    id: holdings[0].id,
-    assetType: holdings[0].assetType,
-    assetCategory: holdings[0].assetCategory,
-    marketValue: holdings.reduce((sum, h) => sum + h.marketValue, 0)
-  }))
+  const grouped = sheets.parseValues(values, headings)
+    .reduce(groupingReducer, {})
+
+  return Object.entries(grouped).map(wrapGroup)
 }
 
 async function get () {
