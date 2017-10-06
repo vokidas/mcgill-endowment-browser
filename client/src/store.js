@@ -1,10 +1,10 @@
 import { views, applyView } from './views'
 
-const visibleAmountIncrement = 20
+const DISPLAY_INCREMENT = 20
 
 const initialState = {
   filtered: [],
-  visibleAmount: visibleAmountIncrement,
+  visibleAmount: DISPLAY_INCREMENT,
   holdings: [],
   metadata: {},
   descriptions: {},
@@ -42,6 +42,12 @@ export function app (state = initialState, action) {
           error: action.error
         }
       })
+    case 'FETCH_DESCRIPTIONS_SENT':
+    case 'FETCH_DESCRIPTIONS_SUCCESS':
+    case 'FETCH_DESCRIPTIONS_FAILURE':
+      return Object.assign({}, state, {
+        descriptions: descriptions(state.descriptions, action)
+      })
     case 'SELECT_VIEW':
       return Object.assign({}, state, {
         filtered: applyView(holdings, views[action.index]),
@@ -53,11 +59,33 @@ export function app (state = initialState, action) {
       })
     case 'LOAD_MORE':
       return Object.assign({}, state, {
-        visibleAmount: visibleAmount + visibleAmountIncrement
+        visibleAmount: visibleAmount + DISPLAY_INCREMENT
       })
     default:
       return state
   }
+}
+
+function descriptions (state = {}, action) {
+  const descriptions = {}
+
+  for (let ticker of action.tickers) {
+    if (action.type === 'FETCH_DESCRIPTIONS_SENT') {
+      descriptions[ticker] = { readyState: 'REQUEST_LOADING' }
+    } else if (action.type === 'FETCH_DESCRIPTIONS_SUCCESS') {
+      descriptions[ticker] = {
+        readyState: 'REQUEST_READY',
+        value: action.descriptions[ticker] // may be null
+      }
+    } else if (action.type === 'FETCH_DESCRIPTIONS_FAILURE') {
+      descriptions[ticker] = {
+        readyState: 'REQUEST_FAILED',
+        error: action.error
+      }
+    }
+  }
+
+  return Object.assign({}, state, descriptions)
 }
 
 /* actions */
@@ -74,17 +102,56 @@ export function initialize () {
         holdings,
         metadata
       })
+
+      dispatch(fetchActiveDescriptions())
     }
 
-    const failure = error => {
-      dispatch({
-        type: 'INIT_FAILURE',
-        error
-      })
-    }
+    const failure = error => dispatch({
+      type: 'INIT_FAILURE',
+      error
+    })
 
-    const requests = [ 'holdings', 'metadata' ].map(api)
+    const requests = [ 'holdings', 'metadata' ].map(target => api(target))
     return Promise.all(requests).then(success).catch(failure)
+  }
+}
+
+export function fetchActiveDescriptions (page) {
+  return function (dispatch, getState) {
+    const { filtered, descriptions } = getState()
+
+    const needsDescription = ({ ticker }) =>
+      ticker &&
+      (!(ticker in descriptions) ||
+        descriptions[ticker].readyState === 'REQUEST_FAILED')
+
+    const tickers = filtered.slice(0, 20)
+      .filter(needsDescription)
+      .map(({ ticker }) => ticker)
+
+    if (!tickers.length) {
+      return
+    }
+
+    dispatch({
+      type: 'FETCH_DESCRIPTIONS_SENT',
+      tickers
+    })
+
+    const success = descriptions => dispatch({
+      type: 'FETCH_DESCRIPTIONS_SUCCESS',
+      tickers,
+      descriptions
+    })
+
+    const failure = error => dispatch({
+      type: 'FETCH_DESCRIPTIONS_FAILURE',
+      tickers,
+      error
+    })
+
+    const target = 'descriptions?tickers=' + tickers.join(',')
+    return api(target).then(success).catch(failure)
   }
 }
 

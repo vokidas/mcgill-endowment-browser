@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Card, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import AssetCard from './AssetCard'
+import AssetItem from './AssetItem'
 
 class AssetCardGroup extends Component {
   renderLoadMore () {
@@ -24,7 +24,7 @@ class AssetCardGroup extends Component {
     return (
       <div>
         <Card.Group itemsPerRow={1}>
-          {assets.map(asset => <AssetCard key={asset.id} asset={asset} />)}
+          {assets.map(asset => <AssetItem key={asset.id} asset={asset} />)}
         </Card.Group>
         {this.renderLoadMore()}
       </div>

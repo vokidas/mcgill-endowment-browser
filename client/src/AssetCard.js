@@ -1,6 +1,5 @@
 import React from 'react'
-import { Card, Icon } from 'semantic-ui-react'
-import { connect } from 'react-redux'
+import { Card, Icon, Accordion } from 'semantic-ui-react'
 import { getMatchingViews } from './views'
 import { formatCurrency, any } from './util'
 
@@ -18,11 +17,36 @@ function renderIcon ({ icon, name }, index) {
   return <Icon key={index} name={icon} title={name} />
 }
 
-function ActiveContent ({ asset }) {
+function GoogleDescription ({ description }) {
+  if (!description) {
+    return null
+  }
+
+  if (description.readyState === 'REQUEST_LOADING') {
+    return <span>Loading...</span>
+  } else if (description.readyState === 'REQUEST_FAILED') {
+    return <span>`Error: ${description.error}`</span>
+  }
+
+  return (
+    <Accordion>
+      <Accordion.Title>
+        <Icon name='dropdown' />
+        View description
+      </Accordion.Title>
+      <Accordion.Content>
+        {description.value}
+      </Accordion.Content>
+    </Accordion>
+  )
+}
+
+function ActiveContent ({ asset, description }) {
   return (
     <Content>
       <Description>
-        {asset.holdings.map(renderHolding)}
+        {/* asset.holdings.map(renderHolding) */}
+        <GoogleDescription description={description} />
       </Description>
     </Content>
   )
@@ -47,7 +71,7 @@ function AssetCard (props) {
           </span>
         </Meta>
       </Content>
-      {isActive && <ActiveContent asset={asset} />}
+      {isActive && <ActiveContent {...props} />}
     </Card>
   )
 
@@ -78,16 +102,4 @@ function AssetCard (props) {
   */
 }
 
-const mapStateToProps = ({ activeAssetId }, { asset }) => ({
-  isActive: activeAssetId === asset.id
-})
-
-const mapDispatchToProps = (dispatch, { asset }) => ({
-  onLoadMoreClick: () => dispatch({ type: 'LOAD_MORE' }),
-  onCardHeaderClick: () => dispatch({
-    type: 'SET_ACTIVE_ASSET',
-    id: asset.id
-  })
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(AssetCard)
+export default AssetCard

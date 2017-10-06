@@ -32,7 +32,7 @@ function groupingReducer (grouped, holding) {
 }
 
 function wrapGroup ([ key, holdings ]) {
-  return {
+  const wrapped = {
     name: key,
     holdings: holdings,
     id: holdings[0].id,
@@ -41,6 +41,15 @@ function wrapGroup ([ key, holdings ]) {
     country: holdings[0].country,
     marketValue: holdings.reduce((sum, h) => sum + h.marketValue, 0)
   }
+
+  if (wrapped.assetCategory !== 'FIXED INCOME SECURITIES' &&
+    holdings[0].ticker) {
+    if (holdings[0].ticker.length < 2) console.log('LESS THAN 2', holdings[0].ticker)
+    // set ticker for equity holdings, if present
+    wrapped.ticker = holdings[0].ticker
+  }
+
+  return wrapped
 }
 
 function parse (values) {
