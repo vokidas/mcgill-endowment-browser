@@ -1,4 +1,4 @@
-import views from './views.config.json'
+import { views, applyView } from './views'
 
 const visibleAmountIncrement = 20
 
@@ -13,13 +13,15 @@ const initialState = {
     error: null
   },
   activeViewIndex: 0,
+  activeAssetId: null,
   views
 }
 
 /* reducers */
 
 export function app (state = initialState, action) {
-  const { holdings, views, activeViewIndex, visibleAmount } = state
+  const { holdings, views, activeViewIndex, activeAssetId, visibleAmount } =
+    state
 
   switch (action.type) {
     case 'INIT_SENT':
@@ -45,6 +47,10 @@ export function app (state = initialState, action) {
         filtered: applyView(holdings, views[action.index]),
         activeViewIndex: action.index
       })
+    case 'SET_ACTIVE_ASSET':
+      return Object.assign({}, state, {
+        activeAssetId: activeAssetId === action.id ? null : action.id
+      })
     case 'LOAD_MORE':
       return Object.assign({}, state, {
         visibleAmount: visibleAmount + visibleAmountIncrement
@@ -52,24 +58,6 @@ export function app (state = initialState, action) {
     default:
       return state
   }
-}
-
-function applyView (holdings, view) {
-  const { match } = view
-
-  return !match ? holdings : holdings.filter(asset => {
-    for (let key in match) {
-      for (let value of match[key]) {
-        for (let item of asset.holdings) {
-          if (item[key] === value) {
-            return true
-          }
-        }
-      }
-    }
-
-    return false
-  })
 }
 
 /* actions */

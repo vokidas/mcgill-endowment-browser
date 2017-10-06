@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card } from 'semantic-ui-react'
+import { Card, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import AssetCard from './AssetCard'
 
@@ -12,7 +12,9 @@ class AssetCardGroup extends Component {
     }
 
     return (
-      <button onClick={onLoadMoreClick}>Load more...</button>
+      <div className="load-more">
+        <Button onClick={onLoadMoreClick}>Show more...</Button>
+      </div>
     )
   }
 

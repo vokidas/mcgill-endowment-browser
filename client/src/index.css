@@ -5,6 +5,23 @@
 } */
 
 .market-value {
-    font-weight: bold;
-    color: #888;
+  font-weight: bold;
+  color: #888;
 }
+
+.load-more {
+  margin: 1.75em .5em;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.ui.cards > .card > .content > .header {
+  font-size: 1.2em !important;
+  color: #333;
+}
+
+.ui.cards > .card > .content > .header.sub {
+}
+

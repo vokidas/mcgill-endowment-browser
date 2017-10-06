@@ -19,7 +19,7 @@ function ViewSelector ({ views, activeViewIndex, makeViewItemOnClick }) {
       view
     }
 
-    return <ViewItem {...props} />
+    return <ViewItem key={index} {...props} />
   }
 
   return (

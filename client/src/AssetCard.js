@@ -1,35 +1,53 @@
 import React from 'react'
 import { Card, Icon } from 'semantic-ui-react'
+import { connect } from 'react-redux'
+import { getMatchingViews } from './views'
+import { formatCurrency, any } from './util'
 
 const { Content, Header, Meta, Description } = Card
 
-function renderHolding (holding) {
+function renderHolding ({ id, description1, description2 }) {
   return (
-    <div key={holding.id}>
-      {holding.description1 + ' ' + holding.description2}
+    <div key={id}>
+      {description1 + ' ' + description2}
     </div>
   )
 }
 
+function renderIcon ({ icon, name }, index) {
+  return <Icon key={index} name={icon} title={name} />
+}
+
+function ActiveContent ({ asset }) {
+  return (
+    <Content>
+      <Description>
+        {asset.holdings.map(renderHolding)}
+      </Description>
+    </Content>
+  )
+}
+
 function AssetCard (props) {
-  const { asset } = props
-  const formattedValue = '$' + asset.marketValue.toFixed(2)
-    .replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
+  const { asset, isActive, onCardHeaderClick } = props
+  const views = getMatchingViews(asset)
+  const isHarmful = any(views, view => view.harmful)
 
   return (
     <Card>
-      <Content>
-        <Header>{asset.name}</Header>
+      <Content className="clickable" onClick={onCardHeaderClick}>
+        <Header className={!isHarmful && 'sub'}>
+          {views.map(renderIcon)}
+          {asset.name}
+        </Header>
         <Meta>
           {asset.country + ' \u00b7 '}
-          <span className="market-value">{formattedValue}</span>
+          <span className="market-value">
+            {formatCurrency(asset.marketValue)}
+          </span>
         </Meta>
       </Content>
-      <Content>
-        <Description>
-          {asset.holdings.map(renderHolding)}
-        </Description>
-      </Content>
+      {isActive && <ActiveContent asset={asset} />}
     </Card>
   )
 
@@ -60,4 +78,16 @@ function AssetCard (props) {
   */
 }
 
-export default AssetCard
+const mapStateToProps = ({ activeAssetId }, { asset }) => ({
+  isActive: activeAssetId === asset.id
+})
+
+const mapDispatchToProps = (dispatch, { asset }) => ({
+  onLoadMoreClick: () => dispatch({ type: 'LOAD_MORE' }),
+  onCardHeaderClick: () => dispatch({
+    type: 'SET_ACTIVE_ASSET',
+    id: asset.id
+  })
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AssetCard)
