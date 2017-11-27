@@ -17,6 +17,10 @@
   cursor: pointer;
 }
 
+.ui.cards > .card {
+  margin: .3em;
+}
+
 .ui.cards > .card > .content > .header {
   font-size: 1.2em !important;
   color: #333;
