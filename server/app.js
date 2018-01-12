@@ -16,11 +16,6 @@ if (process.env.NODE_ENV === 'development') {
   app.set('json spaces', 2)
 }
 
-// Express only serves static assets in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'))
-}
-
 app.get('/api/holdings', (req, res) => {
   holdings.get()
     .then(values => res.json(values))
