@@ -19,7 +19,7 @@ function parse (values) {
   const headings = {
     'Oil': 'oil',
     'Gas': 'gas',
-    'Coal': 'coil',
+    'Coal': 'coal',
     'Ticker': 'ticker',
     'Note': 'note',
     'News #1': 'news1',

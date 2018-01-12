@@ -1,14 +1,17 @@
 import React from 'react'
-import { Card, Icon, Accordion } from 'semantic-ui-react'
+import { Card, Icon, Accordion, Statistic } from 'semantic-ui-react'
 import { getMatchingViews } from './views'
 import { formatCurrency, any } from './util'
 
 const { Content, Header, Meta, Description } = Card
 
-function renderHolding ({ id, description1, description2 }) {
+function renderHolding ({ id, description1, description2, marketValue }) {
   return (
     <div key={id}>
-      {description1 + ' ' + description2}
+      {description1 + ' ' + description2 + ' \u00b7 '}
+      <span className="market-value">
+        {formatCurrency(marketValue)}
+      </span>
     </div>
   )
 }
@@ -17,7 +20,7 @@ function renderIcon ({ icon, name }, index) {
   return <Icon key={index} name={icon} title={name} />
 }
 
-function GoogleDescription ({ description }) {
+function renderDescription (description) {
   if (!description) {
     return null
   }
@@ -26,12 +29,14 @@ function GoogleDescription ({ description }) {
     return <span>Loading...</span>
   } else if (description.readyState === 'REQUEST_FAILED') {
     return <span>`Error: ${description.error}`</span>
+  } else if (description.value === null) {
+    return null
   }
 
   return (
     <Accordion>
       <Accordion.Title>
-        <Icon name='dropdown' />
+        <Icon name="dropdown" />
         View description
       </Accordion.Title>
       <Accordion.Content>
@@ -41,15 +46,29 @@ function GoogleDescription ({ description }) {
   )
 }
 
-function ActiveContent ({ asset, description }) {
-  return (
-    <Content>
-      <Description>
-        {/* asset.holdings.map(renderHolding) */}
-        <GoogleDescription description={description} />
-      </Description>
-    </Content>
-  )
+function renderActiveContent ({ asset, description, metadata }) {
+  const googleDescription = renderDescription(description)
+  const tons = metadata &&
+    (+metadata.oil + +metadata.gas + +metadata.coal)
+  return [
+    (googleDescription || asset.holdings.length > 1) && (
+      <Content key="description">
+        <Description>
+          {asset.holdings.length > 1 && asset.holdings.map(renderHolding)}
+          {googleDescription}
+        </Description>
+      </Content>
+    ),
+    !!tons && (
+      <Content key="tons">
+        <Description>
+          <Statistic horizontal
+            label={<span>Tons of CO<sub>2</sub></span>}
+            value={tons} />
+        </Description>
+      </Content>
+    )
+  ]
 }
 
 function AssetCard (props) {
@@ -71,7 +90,7 @@ function AssetCard (props) {
           </span>
         </Meta>
       </Content>
-      {isActive && <ActiveContent {...props} />}
+      {isActive && renderActiveContent(props)}
     </Card>
   )
 

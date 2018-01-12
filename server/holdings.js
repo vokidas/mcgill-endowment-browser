@@ -44,7 +44,6 @@ function wrapGroup ([ key, holdings ]) {
 
   if (wrapped.assetCategory !== 'FIXED INCOME SECURITIES' &&
     holdings[0].ticker) {
-    if (holdings[0].ticker.length < 2) console.log('LESS THAN 2', holdings[0].ticker)
     // set ticker for equity holdings, if present
     wrapped.ticker = holdings[0].ticker
   }

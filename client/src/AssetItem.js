@@ -1,8 +1,9 @@
 import { connect } from 'react-redux'
 import AssetCard from './AssetCard'
 
-const mapStateToProps = ({ activeAssetId, descriptions }, { asset }) => ({
+const mapStateToProps = ({ activeAssetId, descriptions, metadata }, { asset }) => ({
   description: descriptions[asset.ticker],
+  metadata: metadata[asset.ticker],
   isActive: activeAssetId === asset.id
 })
 
