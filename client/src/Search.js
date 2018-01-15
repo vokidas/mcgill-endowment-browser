@@ -11,7 +11,7 @@ class Search extends Component {
           value={searchTerm} onChange={onChange} />
         <label htmlFor="show-bonds" className="pure-checkbox">
           <input id="show-bonds" type="checkbox"
-            chcked={showBonds} onChange={onShowBondsChange} />
+            checked={showBonds} onChange={onShowBondsChange} />
           {' show bonds'}
         </label>
       </form>
