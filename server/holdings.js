@@ -42,8 +42,13 @@ function wrapGroup ([ key, holdings ]) {
     marketValue: holdings.reduce((sum, h) => sum + h.marketValue, 0)
   }
 
-  if (wrapped.assetCategory !== 'FIXED INCOME SECURITIES' &&
-    holdings[0].ticker) {
+  if (wrapped.assetCategory === 'FIXED INCOME SECURITIES') {
+    // fixed income securities may have multiple countries
+    wrapped.country = holdings.reduce(
+      (country, h) => country === h.country ? country : 'World',
+      wrapped.country
+    )
+  } else if (holdings[0].ticker) {
     // set ticker for equity holdings, if present
     wrapped.ticker = holdings[0].ticker
   }
@@ -68,7 +73,9 @@ function parse (values) {
   const grouped = sheets.parseValues(values, headings)
     .reduce(groupingReducer, {})
 
-  return Object.entries(grouped).map(wrapGroup)
+  return Object.entries(grouped).map(wrapGroup).sort((a, b) =>
+    a.marketValue > b.marketValue ? -1 : a.marketValue < b.marketValue ? 1 : 0
+  )
 }
 
 async function get () {

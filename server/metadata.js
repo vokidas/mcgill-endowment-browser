@@ -17,8 +17,7 @@ function keyingReducer (keyed, company) {
 
 function parse (values) {
   const headings = {
-    'Oil': 'oil',
-    'Gas': 'gas',
+    'Oil & Gas': 'oilGas',
     'Coal': 'coal',
     'Ticker': 'ticker',
     'Note': 'note',
