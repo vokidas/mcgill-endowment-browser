@@ -124,4 +124,11 @@ async function get () {
   }
 }
 
-module.exports = { get: get }
+async function getCsv () {
+  const raw = await getRaw()
+  return raw
+    .map(row => row.map(cell => String(cell).trim()).join(','))
+    .join('\n')
+}
+
+module.exports = { get, getCsv }

@@ -22,6 +22,15 @@ app.get('/api/holdings', (req, res) => {
     .catch(err => error(err, res))
 })
 
+app.get('/api/holdings/csv', (req, res) => {
+  holdings.getCsv()
+    .then(values => {
+      res.setHeader('Content-disposition', 'attachment; filename=holdings.csv')
+      res.send(values)
+    })
+    .catch(err => error(err, res))
+})
+
 app.get('/api/metadata', (req, res) => {
   metadata.get()
     .then(values => res.json(values))

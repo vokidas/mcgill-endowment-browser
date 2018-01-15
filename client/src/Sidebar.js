@@ -28,6 +28,18 @@ function Sidebar (props) {
           {views.map(renderView)}
         </ul>
         <SelectorSearch />
+        <ul className="pure-menu-list">
+          <li className="pure-menu-item">
+            <a href="/api/holdings/csv" className="pure-menu-link">
+              Download data as .csv
+            </a>
+          </li>
+          <li className="pure-menu-item">
+            <a href="https://github.com/vokidas/mcgill-endowment-browser" target="_blank" className="pure-menu-link">
+              View source on Github
+            </a>
+          </li>
+        </ul>
       </nav>
     </aside>
   )
