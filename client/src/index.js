@@ -5,7 +5,6 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import App from './App'
 import { app } from './store'
-import registerServiceWorker from './registerServiceWorker'
 
 import 'purecss/build/pure-min.css'
 import 'purecss/build/grids-responsive.css'
@@ -19,5 +18,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 )
-
-registerServiceWorker()
