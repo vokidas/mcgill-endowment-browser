@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+.pure-checkbox input {
+  vertical-align: middle;
+}
+
 .pure-g [class*=pure-u],
 .card-link,
 .card-holding-item {
@@ -93,6 +97,12 @@ p,
 .sidebar .pure-menu-link:focus,
 .sidebar .pure-menu-link:hover {
   color: #3d4f5d;
+}
+
+.sidebar .pure-checkbox {
+  text-align: center;
+  color: #eee;
+  margin-top: 1em;
 }
 
 .content {

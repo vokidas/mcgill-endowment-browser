@@ -13,7 +13,8 @@ const initialState = {
   activeViewIndex: 0,
   searchTerm: '',
   visibleAmount: DISPLAY_INCREMENT,
-  menuOpen: true
+  menuOpen: true,
+  showBonds: false
 }
 
 /* reducers */
@@ -60,6 +61,10 @@ export function app (state = initialState, action) {
     case 'TOGGLE_MENU':
       return Object.assign({}, state, {
         menuOpen: !state.menuOpen
+      })
+    case 'TOGGLE_SHOW_BONDS':
+      return Object.assign({}, state, {
+        showBonds: !state.showBonds
       })
     case 'LOAD_MORE':
       return Object.assign({}, state, {

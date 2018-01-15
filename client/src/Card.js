@@ -29,7 +29,7 @@ function Card (props) {
           {views.length > 0 && views.map(renderIcon)}
         </div>
       </header>
-      <CardContentHoldings holdings={asset.holdings} />
+      <CardContentHoldings asset={asset} />
       <CardContentDescription
         ticker={asset.ticker}
         description={description} />

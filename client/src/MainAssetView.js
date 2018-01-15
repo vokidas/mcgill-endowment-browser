@@ -4,13 +4,14 @@ import MainView from './MainView'
 import { initialize, fetchDescriptions } from './store'
 
 function getFilteredAssets (state) {
-  const { assets, activeViewIndex, searchTerm } = state
+  const { assets, activeViewIndex, searchTerm, showBonds } = state
   const view = Asset.getView(activeViewIndex)
   const terms = searchTerm.toLowerCase().split(' ')
     .filter(term => term.length > 0)
 
   return assets.filter(asset =>
-    asset.matchesView(view) && asset.matchesSearchTerms(terms)
+    asset.matchesView(view) && asset.matchesSearchTerms(terms) &&
+      (showBonds || !asset.isBond())
   )
 }
 

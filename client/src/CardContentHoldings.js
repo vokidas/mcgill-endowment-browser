@@ -14,9 +14,11 @@ function renderHolding (holding, index) {
 }
 
 function CardContentHoldings (props) {
-  const { holdings } = props
+  const { asset } = props
+  const { holdings } = asset
 
-  if (holdings.length < 2) {
+  if (holdings.length === 1 && asset.name === holdings[0].description1) {
+    // list of holdings unnecessary
     return null
   }
 

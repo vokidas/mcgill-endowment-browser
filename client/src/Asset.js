@@ -5,6 +5,10 @@ class Asset {
     Object.assign(this, holdings)
   }
 
+  isBond () {
+    return this.assetCategory === 'FIXED INCOME SECURITIES'
+  }
+
   matchesView (view) {
     const { match } = view
 
