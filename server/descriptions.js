@@ -4,7 +4,7 @@ const cache = require('./cache')
 
 function fetchSingle (ticker) {
   return new Promise((resolve, reject) => {
-    https.get(`https://finance.google.com/finance?q=${ticker}`, res => {
+    https.get(`https://finance.google.ca/finance?q=${ticker}`, res => {
       if (res.statusCode !== 200) {
         console.error(new Error(res.statusMessage))
         return resolve(null)
