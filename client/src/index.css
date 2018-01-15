@@ -117,6 +117,10 @@ p,
   padding: 0.6em;
 }
 
+.card.card-harmful {
+  border-left-color: darkred;
+}
+
 .card-header {
   padding: 0.2em 0;
 }
@@ -124,6 +128,10 @@ p,
 .card-header h3 {
   margin: 0;
   color: #333;
+}
+
+.card-header .icon-harmful {
+  color: darkred;
 }
 
 .card-meta {

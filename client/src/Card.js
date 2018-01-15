@@ -7,17 +7,27 @@ import CardContentDossier from './CardContentDossier'
 import { formatCurrency } from './util'
 
 function renderIcon (view, index) {
-  const { icon, name } = view
-  const classes = ['fas', 'fa-fw', icon].join(' ')
-  return <i key={index} title={name} className={classes} />
+  const { icon, name, harmful } = view
+  const classes = ['fas', 'fa-fw', icon]
+
+  if (harmful) {
+    classes.push('icon-harmful')
+  }
+
+  return <i key={index} title={name} className={classes.join(' ')} />
 }
 
 function Card (props) {
   const { asset, description, metadata } = props
   const views = asset.getMatchingViews()
+  let className = 'card pure-u-1 pure-u-xl-1-2'
+
+  if (metadata && metadata.note) {
+    className += ' card-harmful'
+  }
 
   return (
-    <div className="card pure-u-1 pure-u-xl-1-2">
+    <div className={className}>
       <header className="card-header">
         <h3>{asset.name}</h3>
         <div className="card-meta">
