@@ -2,6 +2,30 @@ const sheets = require('./sheets')
 const settings = require('./settings')
 const cache = require('./cache')
 
+const exchanges = {
+  'Australia': 'ASX',
+  'Belgium': 'EBR',
+  'Bermuda': 'BSX',
+  'Canada': 'TSE',
+  'Cayman Islands': 'CSX',
+  'Denmark': 'CPH',
+  'Finland': 'HEL',
+  'France': 'EPA',
+  'Germany': 'ETR',
+  'Hong Kong': 'HKG',
+  'Ireland': 'ISE',
+  'Israel': 'TLV',
+  'Italy': 'BIT',
+  'Japan': 'TYO',
+  'Luxemburg': 'EPA',
+  'Netherlands': 'AMS',
+  'New Zealand': 'NZE',
+  'Portugal': 'ELI',
+  'Spain': 'BME',
+  'Sweden': 'STO',
+  'United Kingdom': 'LON'
+}
+
 async function getRaw () {
   const spreadsheetId = await settings.get('raw-spreadsheet-id')
   const sheetName = await settings.get('raw-sheet-name')
@@ -31,6 +55,19 @@ function groupingReducer (grouped, holding) {
   return grouped
 }
 
+function searchableTicker (holding) {
+  const { ticker, country, description1 } = holding
+
+  if (country === 'Singapore' || country === 'Norway') {
+    // tickers are wrong, search by name
+    return description1
+  } else if (exchanges[country]) {
+    return `${exchanges[country]}:${ticker}`
+  }
+
+  return ticker
+}
+
 function wrapGroup ([ key, holdings ]) {
   const wrapped = {
     name: key,
@@ -51,6 +88,7 @@ function wrapGroup ([ key, holdings ]) {
   } else if (holdings[0].ticker) {
     // set ticker for equity holdings, if present
     wrapped.ticker = holdings[0].ticker
+    wrapped.searchableTicker = searchableTicker(holdings[0])
   }
 
   return wrapped

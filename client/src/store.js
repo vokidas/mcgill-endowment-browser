@@ -4,8 +4,8 @@ const DISPLAY_INCREMENT = 20
 
 const initialState = {
   assets: [],
-  metadata: {},
-  descriptions: {},
+  metadata: {}, // indexed by ticker
+  descriptions: {}, // indexed by searchableTicker
   init: {
     readyState: 'REQUEST_UNSENT',
     error: null
@@ -134,7 +134,8 @@ export function fetchDescriptions (assets) {
         descriptions[ticker].readyState === 'REQUEST_FAILED')
     }
 
-    const tickers = assets.map(asset => asset.ticker)
+    const tickers = assets
+      .map(asset => asset.searchableTicker)
       .filter(needsDescription)
 
     if (tickers.length === 0) {

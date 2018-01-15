@@ -31,7 +31,7 @@ function Card (props) {
       </header>
       <CardContentHoldings asset={asset} />
       <CardContentDescription
-        ticker={asset.ticker}
+        ticker={asset.searchableTicker}
         description={description} />
       <CardContentNote {...metadata} />
       <CardContentReserves {...metadata} />

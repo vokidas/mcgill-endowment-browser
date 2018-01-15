@@ -56,11 +56,7 @@ class Asset {
   getSearchTokens () {
     if (this._tokens === undefined) {
       let tokens = this.name.toLowerCase().split(' ')
-
-      if (this.ticker) {
-        tokens.push(this.ticker.toLowerCase())
-      }
-
+      tokens.push(this.country.toLowerCase())
       this._tokens = tokens
     }
 
