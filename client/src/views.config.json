@@ -1,11 +1,11 @@
 [
   {
-    "name": "All",
-    "icon": "content"
+    "name": "All Holdings",
+    "icon": "fa-list"
   },
   {
     "name": "Military",
-    "icon": "military",
+    "icon": "fa-fighter-jet",
     "harmful": true,
     "match": {
       "assetType": [
@@ -16,7 +16,7 @@
   },
   {
     "name": "Oil & Gas",
-    "icon": "industry",
+    "icon": "fa-tint",
     "harmful": true,
     "match": {
       "assetType": [
@@ -30,7 +30,7 @@
   },
   {
     "name": "Mining",
-    "icon": "wrench",
+    "icon": "fa-wrench",
     "harmful": true,
     "match": {
       "assetType": [
@@ -42,7 +42,7 @@
   },
   {
     "name": "Alternative Energy",
-    "icon": "sun",
+    "icon": "fa-sun",
     "match": {
       "assetType": [
         "ENERGY - ALTERNATE SOURCES"
@@ -51,7 +51,7 @@
   },
   {
     "name": "Banking",
-    "icon": "credit card",
+    "icon": "fa-credit-card",
     "match": {
       "assetType": [
         "BANKS",
@@ -66,7 +66,7 @@
   },
   {
     "name": "Palestine Occupation",
-    "icon": "flag",
+    "icon": "fa-flag",
     "harmful": true,
     "match": {
       "ticker": [

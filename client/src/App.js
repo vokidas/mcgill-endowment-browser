@@ -1,16 +1,14 @@
 import React from 'react'
-import { Container, Menu } from 'semantic-ui-react'
-import AssetBrowser from './AssetBrowser'
+import Asset from './Asset'
+import SelectorSidebar from './SelectorSidebar'
+import MainAssetView from './MainAssetView'
 
 function App () {
+  const views = Asset.getViews()
   return (
-    <div>
-      <Menu inverted>
-        <Container>
-          <Menu.Item>mcgill investment browser</Menu.Item>
-        </Container>
-      </Menu>
-      <AssetBrowser />
+    <div className="pure-g">
+      <SelectorSidebar views={views} />
+      <MainAssetView />
     </div>
   )
 }

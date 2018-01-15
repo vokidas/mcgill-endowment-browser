@@ -1,31 +1,181 @@
-/* body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-} */
+/* general */
 
-.market-value {
+* {
+  box-sizing: border-box;
+}
+
+.pure-g [class*=pure-u],
+.card-link,
+.card-holding-item {
+  font-family: Montserrat, sans-serif;
+}
+
+p,
+.card-meta,
+.card-content,
+.bold-value {
+  font-family: Domine, serif;
+}
+
+.card-header h3,
+.card-holding-item {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.content a {
+  text-decoration: none;
+}
+
+.bold-value {
   font-weight: bold;
-  color: #888;
+  color: #444;
 }
 
-.load-more {
-  margin: 1.75em .5em;
+/* layout */
+
+.sidebar {
+  background-color: #3d4f5d;
+  position: fixed;
+  top: 0;
+  overflow-y: auto;
 }
 
-.clickable {
-  cursor: pointer;
+.sidebar.open {
+  bottom: 0;
 }
 
-.ui.cards > .card {
-  margin: .3em;
+.sidebar .menu-toggle {
+  display: block;
+  float: right;
+  color: #fff;
 }
 
-.ui.cards > .card > .content > .header {
-  font-size: 1.2em !important;
+.sidebar .header {
+  color: #fff;
+  text-transform: lowercase;
+  font-weight: bold;
+  font-size: 1.1em;
+  padding: 1rem 1rem 1rem;
+}
+
+.sidebar .pure-menu {
+  display: none;
+}
+
+.sidebar.open .pure-menu {
+  display: block;
+}
+
+.sidebar .pure-menu-list .fas {
+  float: right;
+}
+
+.sidebar .pure-menu-link {
+  color: #eee;
+  text-transform: lowercase;
+}
+
+.sidebar .pure-form {
+  padding: 1em;
+}
+
+.sidebar .pure-form input[type=text] {
+  border-radius: 16px;
+  width: 100%;
+  font-size: 0.9em;
+  padding: 0.5em 1em;
+}
+
+.sidebar .pure-menu-active>.pure-menu-link,
+.sidebar .pure-menu-link:focus,
+.sidebar .pure-menu-link:hover {
+  color: #3d4f5d;
+}
+
+.content {
+  padding: 1em;
+  margin-top: 3.3em;
+}
+
+.card {
+  border-top: solid 1px #ddd;
+  border-left: solid 4px #eee;
+  padding: 0.6em;
+}
+
+.card-header {
+  padding: 0.2em 0;
+}
+
+.card-header h3 {
+  margin: 0;
   color: #333;
 }
 
-.ui.cards > .card > .content > .header.sub {
+.card-meta {
+  color: #777;
+  padding: 0.1em 0;
 }
 
+.card-content {
+  padding: 0.3em 0;
+  line-height: 1.2em;
+}
+
+.card-link {
+  font-size: 0.8em;
+}
+
+.load-more {
+  margin-top: 1em;
+}
+
+@media (min-width: 48em) {
+  .sidebar {
+    bottom: 0;
+  }
+
+  .sidebar .pure-menu {
+    display: block;
+  }
+
+  .sidebar .menu-toggle {
+    display: none;
+  }
+
+  .sidebar .header {
+    padding: 2rem 1rem 1rem;
+    font-size: 1.2em;
+  }
+
+  .content {
+    margin-top: 0;
+    margin-left: 40%;
+    padding: 2em;
+  }
+}
+
+@media (min-width: 64em) {
+  .content {
+    margin-left: 33.3333333333333333%;
+  }
+}
+
+@media (min-width: 80em) {
+  .content {
+    margin-left: 25%;
+  }
+
+  .card {
+    width: 50%;
+    float: left;
+    clear: left;
+  }
+
+  .card:nth-child(even) {
+    float: right;
+    clear: right;
+  }
+}

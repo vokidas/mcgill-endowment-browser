@@ -4,10 +4,11 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import App from './App'
-import registerServiceWorker from './registerServiceWorker'
 import { app } from './store'
+import registerServiceWorker from './registerServiceWorker'
 
-import 'semantic-ui-css/semantic.min.css'
+import 'purecss/build/pure-min.css'
+import 'purecss/build/grids-responsive.css'
 import './index.css'
 
 const store = createStore(app, applyMiddleware(thunk))
@@ -16,5 +17,7 @@ ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById('root'))
+  document.getElementById('root')
+)
+
 registerServiceWorker()

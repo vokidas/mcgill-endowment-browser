@@ -1,11 +1,11 @@
-import { views, applyView } from './views'
+import Asset from './Asset'
 
 const DISPLAY_INCREMENT = 20
 
 const initialState = {
   filtered: [],
   visibleAmount: DISPLAY_INCREMENT,
-  holdings: [],
+  assets: [],
   metadata: {},
   descriptions: {},
   init: {
@@ -14,14 +14,14 @@ const initialState = {
   },
   activeViewIndex: 0,
   activeAssetId: null,
-  views
+  menuOpen: true
 }
 
 /* reducers */
 
 export function app (state = initialState, action) {
-  const { holdings, views, activeViewIndex, activeAssetId, visibleAmount } =
-    state
+  const { assets, activeViewIndex, activeAssetId,
+    visibleAmount } = state
 
   switch (action.type) {
     case 'INIT_SENT':
@@ -30,8 +30,11 @@ export function app (state = initialState, action) {
       })
     case 'INIT_SUCCESS':
       return Object.assign({}, state, {
-        holdings: action.holdings,
-        filtered: applyView(action.holdings, views[activeViewIndex]),
+        assets: action.assets,
+        filtered: Asset.applyView(
+          action.assets,
+          activeViewIndex
+        ),
         metadata: action.metadata,
         init: { readyState: 'REQUEST_READY' }
       })
@@ -46,16 +49,28 @@ export function app (state = initialState, action) {
     case 'FETCH_DESCRIPTIONS_SUCCESS':
     case 'FETCH_DESCRIPTIONS_FAILURE':
       return Object.assign({}, state, {
-        descriptions: descriptions(state.descriptions, action)
+        descriptions: descriptions(
+          state.descriptions,
+          action
+        )
       })
     case 'SELECT_VIEW':
       return Object.assign({}, state, {
-        filtered: applyView(holdings, views[action.index]),
-        activeViewIndex: action.index
+        filtered: Asset.applyView(
+          assets,
+          action.index
+        ),
+        activeViewIndex: action.index,
+        visibleAmount: DISPLAY_INCREMENT
       })
     case 'SET_ACTIVE_ASSET':
       return Object.assign({}, state, {
-        activeAssetId: activeAssetId === action.id ? null : action.id
+        activeAssetId:
+          activeAssetId === action.id ? null : action.id
+      })
+    case 'TOGGLE_MENU':
+      return Object.assign({}, state, {
+        menuOpen: !state.menuOpen
       })
     case 'LOAD_MORE':
       return Object.assign({}, state, {
@@ -97,9 +112,13 @@ export function initialize () {
     })
 
     const success = ([ holdings, metadata ]) => {
+      const assets = holdings.map(
+        holding => new Asset(holding)
+      )
+
       dispatch({
         type: 'INIT_SUCCESS',
-        holdings,
+        assets,
         metadata
       })
 
@@ -111,12 +130,26 @@ export function initialize () {
       error
     })
 
-    const requests = [ 'holdings', 'metadata' ].map(target => api(target))
-    return Promise.all(requests).then(success).catch(failure)
+    const requests = ['holdings', 'metadata']
+      .map(target => api(target))
+
+    return Promise.all(requests).then(success, failure)
   }
 }
 
-export function fetchActiveDescriptions (page) {
+export function selectView (index) {
+  return function (dispatch, getState) {
+    dispatch({
+      type: 'SELECT_VIEW',
+      index
+    })
+
+    dispatch({ type: 'TOGGLE_MENU' })
+    dispatch(fetchActiveDescriptions())
+  }
+}
+
+export function fetchActiveDescriptions () {
   return function (dispatch, getState) {
     const { filtered, descriptions } = getState()
 
