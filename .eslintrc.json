@@ -1,10 +1,11 @@
 {
 	"extends": ["standard", "standard-react"],
     "plugins": ["standard", "react"],
-	"root": true,
+	  "root": true,
     "rules": {
         "jsx-quotes": ["error", "prefer-double"],
         "no-console": ["warn", { "allow": ["info", "warn", "error"] }],
+        "no-labels": ["error", { "allowLoop": true }],
         "react/prop-types": "off"
     },
     "globals": { "fetch": false }

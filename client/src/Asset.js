@@ -5,9 +5,15 @@ class Asset {
     Object.assign(this, holdings)
   }
 
-  matches (pattern) {
-    for (let key in pattern) {
-      for (let value of pattern[key]) {
+  matchesView (view) {
+    const { match } = view
+
+    if (!match) {
+      return true
+    }
+
+    for (let key in match) {
+      for (let value of match[key]) {
         for (let item of this.holdings) {
           if (item[key] === value) {
             return true
@@ -19,24 +25,46 @@ class Asset {
     return false
   }
 
+  matchesSearchTerms (terms) {
+    loop: for (let term of terms) {
+      for (let token of this.getSearchTokens()) {
+        if (token.indexOf(term) !== -1) {
+          continue loop
+        }
+      }
+
+      return false
+    }
+
+    return true
+  }
+
   getMatchingViews () {
     if (this._views === undefined) {
-      this._views = views.filter(view =>
-        view.match && this.matches(view.match))
+      this._views = views.filter(
+        view => view.match && this.matchesView(view)
+      )
     }
 
     return this._views
   }
 
-  static applyView (assets, index) {
-    const view = views[index]
-    return view.match ? assets.filter(
-      asset => asset.matches(view.match)
-    ) : assets
+  getSearchTokens () {
+    if (this._tokens === undefined) {
+      let tokens = this.name.toLowerCase().split(' ')
+
+      if (this.ticker) {
+        tokens.push(this.ticker.toLowerCase())
+      }
+
+      this._tokens = tokens
+    }
+
+    return this._tokens
   }
 
-  static getViews () {
-    return views
+  static getView (index) {
+    return views[index]
   }
 }
 

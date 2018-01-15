@@ -40,6 +40,7 @@ p,
   position: fixed;
   top: 0;
   overflow-y: auto;
+  z-index: 1;
 }
 
 .sidebar.open {

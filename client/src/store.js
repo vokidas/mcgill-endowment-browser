@@ -3,8 +3,6 @@ import Asset from './Asset'
 const DISPLAY_INCREMENT = 20
 
 const initialState = {
-  filtered: [],
-  visibleAmount: DISPLAY_INCREMENT,
   assets: [],
   metadata: {},
   descriptions: {},
@@ -13,16 +11,14 @@ const initialState = {
     error: null
   },
   activeViewIndex: 0,
-  activeAssetId: null,
+  searchTerm: '',
+  visibleAmount: DISPLAY_INCREMENT,
   menuOpen: true
 }
 
 /* reducers */
 
 export function app (state = initialState, action) {
-  const { assets, activeViewIndex, activeAssetId,
-    visibleAmount } = state
-
   switch (action.type) {
     case 'INIT_SENT':
       return Object.assign({}, state, {
@@ -31,10 +27,6 @@ export function app (state = initialState, action) {
     case 'INIT_SUCCESS':
       return Object.assign({}, state, {
         assets: action.assets,
-        filtered: Asset.applyView(
-          action.assets,
-          activeViewIndex
-        ),
         metadata: action.metadata,
         init: { readyState: 'REQUEST_READY' }
       })
@@ -54,19 +46,16 @@ export function app (state = initialState, action) {
           action
         )
       })
-    case 'SELECT_VIEW':
+    case 'SET_ACTIVE_VIEW':
       return Object.assign({}, state, {
-        filtered: Asset.applyView(
-          assets,
-          action.index
-        ),
         activeViewIndex: action.index,
-        visibleAmount: DISPLAY_INCREMENT
+        visibleAmount: DISPLAY_INCREMENT,
+        menuOpen: false
       })
-    case 'SET_ACTIVE_ASSET':
+    case 'SET_SEARCH_TERM':
       return Object.assign({}, state, {
-        activeAssetId:
-          activeAssetId === action.id ? null : action.id
+        searchTerm: action.value,
+        visibleAmount: DISPLAY_INCREMENT
       })
     case 'TOGGLE_MENU':
       return Object.assign({}, state, {
@@ -74,7 +63,7 @@ export function app (state = initialState, action) {
       })
     case 'LOAD_MORE':
       return Object.assign({}, state, {
-        visibleAmount: visibleAmount + DISPLAY_INCREMENT
+        visibleAmount: state.visibleAmount + DISPLAY_INCREMENT
       })
     default:
       return state
@@ -112,17 +101,13 @@ export function initialize () {
     })
 
     const success = ([ holdings, metadata ]) => {
-      const assets = holdings.map(
-        holding => new Asset(holding)
-      )
+      const assets = holdings.map(holding => new Asset(holding))
 
       dispatch({
         type: 'INIT_SUCCESS',
         assets,
         metadata
       })
-
-      dispatch(fetchActiveDescriptions())
     }
 
     const failure = error => dispatch({
@@ -130,40 +115,25 @@ export function initialize () {
       error
     })
 
-    const requests = ['holdings', 'metadata']
-      .map(target => api(target))
-
+    const requests = ['holdings', 'metadata'].map(target => api(target))
     return Promise.all(requests).then(success, failure)
   }
 }
 
-export function selectView (index) {
+export function fetchDescriptions (assets) {
   return function (dispatch, getState) {
-    dispatch({
-      type: 'SELECT_VIEW',
-      index
-    })
+    const { descriptions } = getState()
 
-    dispatch({ type: 'TOGGLE_MENU' })
-    dispatch(fetchActiveDescriptions())
-  }
-}
-
-export function fetchActiveDescriptions () {
-  return function (dispatch, getState) {
-    const { filtered, descriptions } = getState()
-
-    const needsDescription = ({ ticker }) =>
-      ticker &&
-      (!(ticker in descriptions) ||
+    const needsDescription = ticker => {
+      return ticker && (!descriptions[ticker] ||
         descriptions[ticker].readyState === 'REQUEST_FAILED')
+    }
 
-    const tickers = filtered.slice(0, 20)
+    const tickers = assets.map(asset => asset.ticker)
       .filter(needsDescription)
-      .map(({ ticker }) => ticker)
 
-    if (!tickers.length) {
-      return
+    if (tickers.length === 0) {
+      return // nothing to fetch
     }
 
     dispatch({
@@ -184,7 +154,7 @@ export function fetchActiveDescriptions () {
     })
 
     const target = 'descriptions?tickers=' + tickers.join(',')
-    return api(target).then(success).catch(failure)
+    return api(target).then(success, failure)
   }
 }
 

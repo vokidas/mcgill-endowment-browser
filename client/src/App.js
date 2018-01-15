@@ -1,10 +1,9 @@
 import React from 'react'
-import Asset from './Asset'
 import SelectorSidebar from './SelectorSidebar'
 import MainAssetView from './MainAssetView'
+import views from './views.config.json'
 
 function App () {
-  const views = Asset.getViews()
   return (
     <div className="pure-g">
       <SelectorSidebar views={views} />

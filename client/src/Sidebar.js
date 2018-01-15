@@ -1,5 +1,6 @@
 import React from 'react'
 import SelectorItem from './SelectorItem'
+import SelectorSearch from './SelectorSearch'
 
 function renderView (view, index) {
   return <SelectorItem key={index} index={index} view={view} />
@@ -26,6 +27,7 @@ function Sidebar (props) {
         <ul className="pure-menu-list">
           {views.map(renderView)}
         </ul>
+        <SelectorSearch />
       </nav>
     </aside>
   )

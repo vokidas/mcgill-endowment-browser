@@ -1,19 +1,32 @@
 import { connect } from 'react-redux'
+import Asset from './Asset'
 import MainView from './MainView'
-import { initialize } from './store'
+import { initialize, fetchDescriptions } from './store'
+
+function getFilteredAssets (state) {
+  const { assets, activeViewIndex, searchTerm } = state
+  const view = Asset.getView(activeViewIndex)
+  const terms = searchTerm.toLowerCase().split(' ')
+    .filter(term => term.length > 0)
+
+  return assets.filter(asset =>
+    asset.matchesView(view) && asset.matchesSearchTerms(terms)
+  )
+}
 
 const mapStateToProps = state => {
-  const { init, filtered, visibleAmount } = state
+  const filtered = getFilteredAssets(state)
   return {
-    assets: filtered.slice(0, visibleAmount),
-    showLoadMore: visibleAmount < filtered.length,
-    init
+    assets: filtered.slice(0, state.visibleAmount),
+    showLoadMore: state.visibleAmount < filtered.length,
+    init: state.init
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  onLoadModeClick: () => dispatch({ type: 'LOAD_MORE' }),
-  onMount: () => dispatch(initialize())
+  onLoadMoreClick: () => dispatch({ type: 'LOAD_MORE' }),
+  onMount: () => dispatch(initialize()),
+  onWillReceiveProps: ({ assets }) => dispatch(fetchDescriptions(assets))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainView)
