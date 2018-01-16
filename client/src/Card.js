@@ -3,6 +3,7 @@ import CardContentHoldings from './CardContentHoldings'
 import CardContentDescription from './CardContentDescription'
 import CardContentNote from './CardContentNote'
 import CardContentReserves from './CardContentReserves'
+import CardContentNews from './CardContentNews'
 import CardContentDossier from './CardContentDossier'
 import { formatCurrency } from './util'
 
@@ -45,6 +46,7 @@ function Card (props) {
         description={description} />
       <CardContentNote {...metadata} />
       <CardContentReserves {...metadata} />
+      <CardContentNews {...metadata} />
       <CardContentDossier {...metadata} />
     </div>
   )
