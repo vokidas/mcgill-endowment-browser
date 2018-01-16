@@ -9,7 +9,7 @@ function CardContentNote (props) {
 
   return (
     <div className="card-content">
-      <i className="fas fa-fw fa-exclamation-triangle" />
+      <i className="fas fa-fw fa-exclamation-triangle icon-harmful" />
       {' ' + note}
     </div>
   )

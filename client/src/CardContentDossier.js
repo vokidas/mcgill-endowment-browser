@@ -10,7 +10,7 @@ function CardContentDossier (props) {
 
   return (
     <div className="card-content">
-      <i className="fas fa-fw fa-folder-open" />
+      <i className="fas fa-fw fa-folder-open icon-dossier" />
       {' Divest McGill dossier \u00b7 '}
       <CardLink href={link}>Google Drive</CardLink>
     </div>

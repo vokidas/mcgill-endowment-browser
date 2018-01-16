@@ -17,7 +17,7 @@ function CardContentReserves (props) {
 
   return (
     <div className="card-content">
-      <i className="fas fa-fw fa-industry" />{' '}
+      <i className="fas fa-fw fa-industry icon-harmful" />{' '}
       <span className="bold-value">{total}</span>{' '}
       tons of CO<sub>2</sub>{' '}reserves ({description})
     </div>
