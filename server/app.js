@@ -43,6 +43,12 @@ app.get('/api/descriptions', (req, res) => {
     .catch(err => error(err, res))
 })
 
+app.get('/api/summary', (req, res) => {
+  holdings.getSummary()
+    .then(values => res.json(values))
+    .catch(err => error(err, res))
+})
+
 app.listen(app.get('port'), () => {
   console.info(`Listening on http://localhost:${app.get('port')}`)
 })

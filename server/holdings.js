@@ -116,6 +116,16 @@ function parse (values) {
   )
 }
 
+async function getSummaryByAssetType () {
+  const grouped = await get()
+  return grouped.reduce((summary, group) => {
+    let key = group.assetType
+    let value = (summary[key] || 0) + group.marketValue
+    summary[key] = Math.round(value * 100) / 100
+    return summary
+  }, {})
+}
+
 async function get () {
   try {
     return await cache.get('parsed-holdings')
@@ -131,4 +141,12 @@ async function getCsv () {
     .join('\n')
 }
 
-module.exports = { get, getCsv }
+async function getSummary () {
+  try {
+    return await cache.get('holdings-summary')
+  } catch (err) {
+    return cache.set('holdings-summary', await getSummaryByAssetType())
+  }
+}
+
+module.exports = { get, getSummary, getCsv }
