@@ -13,10 +13,6 @@ function renderLoadMore (onLoadMoreClick) {
 }
 
 class MainView extends Component {
-  componentDidMount () {
-    this.props.onMount()
-  }
-
   componentWillReceiveProps (nextProps) {
     this.props.onWillReceiveProps(nextProps)
   }

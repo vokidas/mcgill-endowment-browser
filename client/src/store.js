@@ -6,14 +6,15 @@ const initialState = {
   assets: [],
   metadata: {}, // indexed by ticker
   descriptions: {}, // indexed by searchableTicker
+  summary: {}, // indexed by assetType
   init: {
     readyState: 'REQUEST_UNSENT',
     error: null
   },
-  activeViewIndex: 0,
+  activeViewIndex: null,
   searchTerm: '',
   visibleAmount: DISPLAY_INCREMENT,
-  menuOpen: true,
+  menuOpen: false,
   showBonds: false
 }
 
@@ -29,6 +30,7 @@ export function app (state = initialState, action) {
       return Object.assign({}, state, {
         assets: action.assets,
         metadata: action.metadata,
+        summary: action.summary,
         init: { readyState: 'REQUEST_READY' }
       })
     case 'INIT_FAILURE':
@@ -105,13 +107,14 @@ export function initialize () {
       type: 'INIT_SENT'
     })
 
-    const success = ([ holdings, metadata ]) => {
+    const success = ([ holdings, metadata, summary ]) => {
       const assets = holdings.map(holding => new Asset(holding))
 
       dispatch({
         type: 'INIT_SUCCESS',
         assets,
-        metadata
+        metadata,
+        summary
       })
     }
 
@@ -120,7 +123,7 @@ export function initialize () {
       error
     })
 
-    const requests = ['holdings', 'metadata'].map(target => api(target))
+    const requests = ['holdings', 'metadata', 'summary'].map(target => api(target))
     return Promise.all(requests).then(success, failure)
   }
 }

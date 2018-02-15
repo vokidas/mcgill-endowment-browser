@@ -6,7 +6,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onMenuToggle: () => dispatch({ type: 'TOGGLE_MENU' })
+  onMenuToggle: () => dispatch({ type: 'TOGGLE_MENU' }),
+  onHeaderClick: () => dispatch({ type: 'SET_ACTIVE_VIEW', index: null })
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)

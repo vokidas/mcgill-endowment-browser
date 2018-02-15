@@ -7,7 +7,7 @@ function renderView (view, index) {
 }
 
 function Sidebar (props) {
-  const { views, open, onMenuToggle } = props
+  const { views, open, onMenuToggle, onHeaderClick } = props
   let className = 'sidebar pure-u-1 pure-u-md-2-5 pure-u-lg-1-3 pure-u-xl-1-4'
 
   if (open) {
@@ -21,7 +21,10 @@ function Sidebar (props) {
           onClick={onMenuToggle}>
           <i className="fas fa-fw fa-bars" />
         </a>
-        McGill Endowment Browser
+        <a href="#" className="header-link"
+          onClick={onHeaderClick}>
+          McGill Endowment Browser
+        </a>
       </header>
       <nav className="pure-menu">
         <ul className="pure-menu-list">

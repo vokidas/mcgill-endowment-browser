@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import Asset from './Asset'
 import MainView from './MainView'
-import { initialize, fetchDescriptions } from './store'
+import { fetchDescriptions } from './store'
 
 function getFilteredAssets (state) {
   const { assets, activeViewIndex, searchTerm, showBonds } = state
@@ -26,7 +26,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   onLoadMoreClick: () => dispatch({ type: 'LOAD_MORE' }),
-  onMount: () => dispatch(initialize()),
   onWillReceiveProps: ({ assets }) => dispatch(fetchDescriptions(assets))
 })
 

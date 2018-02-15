@@ -41,11 +41,16 @@ p,
 
 .sidebar {
   background-color: #3d4f5d;
-  padding-bottom: 0.5em;
+  /* padding-bottom: 0.5em; */
   position: fixed;
   top: 0;
   overflow-y: auto;
   z-index: 1;
+}
+
+.sidebar .header-link {
+  color: #fff;
+  text-decoration: none;
 }
 
 .sidebar.open {
@@ -59,7 +64,6 @@ p,
 }
 
 .sidebar .header {
-  color: #fff;
   text-transform: lowercase;
   font-weight: bold;
   font-size: 1.1em;
@@ -109,6 +113,10 @@ p,
 .content {
   padding: 1em;
   margin-top: 3.3em;
+}
+
+.content *:first-child {
+  margin-top: 0;
 }
 
 .card {
