@@ -1,8 +1,9 @@
 import React from 'react'
+import { Chart } from 'react-google-charts'
 import Content from './Content'
 
 function SplashContent (props) {
-  const { init } = props
+  const { summary, init } = props
 
   if (init.readyState === 'REQUEST_UNSENT' ||
     init.readyState === 'REQUEST_LOADING') {
@@ -23,7 +24,16 @@ function SplashContent (props) {
     )
   }
 
-  return <div>{JSON.stringify(init)}</div>
+  const data = [['Asset type', 'Value']]
+    .concat(summary)
+
+  return (
+    <Chart
+      chartType="PieChart"
+      data={data}
+      width="100%"
+    />
+  )
 }
 
 function Splash (props) {

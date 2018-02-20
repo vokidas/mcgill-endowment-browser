@@ -66,6 +66,24 @@ class Asset {
   static getView (index) {
     return views[index]
   }
+
+  static getSummary (assets) {
+    const summary = {
+      views: [],
+      total: 0
+    }
+
+    for (let view of views) {
+      const total = assets.reduce((acc, asset) => {
+        return asset.matchesView(view) ? acc + asset.marketValue : acc
+      }, 0)
+
+      summary.views.push(Object.assign({}, view, { total }))
+      summary.total += total
+    }
+
+    return summary
+  }
 }
 
 export default Asset

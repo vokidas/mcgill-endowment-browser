@@ -6,7 +6,7 @@ const initialState = {
   assets: [],
   metadata: {}, // indexed by ticker
   descriptions: {}, // indexed by searchableTicker
-  summary: {}, // indexed by assetType
+  summary: {},
   init: {
     readyState: 'REQUEST_UNSENT',
     error: null
@@ -107,8 +107,9 @@ export function initialize () {
       type: 'INIT_SENT'
     })
 
-    const success = ([ holdings, metadata, summary ]) => {
+    const success = ([ holdings, metadata ]) => {
       const assets = holdings.map(holding => new Asset(holding))
+      const summary = Asset.getSummary(assets)
 
       dispatch({
         type: 'INIT_SUCCESS',
@@ -123,7 +124,7 @@ export function initialize () {
       error
     })
 
-    const requests = ['holdings', 'metadata', 'summary'].map(target => api(target))
+    const requests = ['holdings', 'metadata'].map(target => api(target))
     return Promise.all(requests).then(success, failure)
   }
 }
