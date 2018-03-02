@@ -1,6 +1,33 @@
 import React from 'react'
-import { Chart } from 'react-google-charts'
+// import { Chart } from 'react-google-charts'
 import Content from './Content'
+import { formatCurrency } from './util'
+
+function SummaryTableRow (props) {
+  const { view } = props
+  return (
+    <tr>
+      <td>{view.name}</td>
+      <td>{formatCurrency(view.total)}</td>
+    </tr>
+  )
+}
+
+function SummaryTable (props) {
+  const { summary } = props
+  const all = summary[0]
+  const views = summary.slice(1)
+
+  return (
+    <table className="pure-table">
+      <tr>
+        <th>{all.name}</th>
+        <th>{formatCurrency(all.total)}</th>
+      </tr>
+      {views.map(view => <SummaryTableRow view={view} />)}
+    </table>
+  )
+}
 
 function SplashContent (props) {
   const { summary, init } = props
@@ -24,21 +51,10 @@ function SplashContent (props) {
     )
   }
 
-  const data = [['Asset type', 'Value']]
-    .concat(summary)
-
-  return (
-    <Chart
-      chartType="PieChart"
-      data={data}
-      width="100%"
-    />
-  )
+  return <SummaryTable summary={summary} />
 }
 
 function Splash (props) {
-  const { summary, init } = props
-
   return (
     <Content>
       <h3>welcome.</h3>
