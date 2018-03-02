@@ -68,18 +68,14 @@ class Asset {
   }
 
   static getSummary (assets) {
-    const summary = {
-      views: [],
-      total: 0
-    }
+    const summary = {}
 
     for (let view of views) {
       const total = assets.reduce((acc, asset) => {
         return asset.matchesView(view) ? acc + asset.marketValue : acc
       }, 0)
 
-      summary.views.push(Object.assign({}, view, { total }))
-      summary.total += total
+      summary[view.id] = Object.assign({}, view, { total })
     }
 
     return summary

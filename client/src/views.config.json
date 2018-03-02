@@ -1,9 +1,11 @@
 [
   {
+    "id": "all",
     "name": "All Holdings",
     "icon": "fa-list"
   },
   {
+    "id": "military",
     "name": "Military",
     "icon": "fa-fighter-jet",
     "harmful": true,
@@ -15,6 +17,7 @@
     }
   },
   {
+    "id": "oil",
     "name": "Oil & Gas",
     "icon": "fa-tint",
     "harmful": true,
@@ -24,23 +27,29 @@
         "INTEGRATED OIL & GAS - UK",
         "OIL & GAS",
         "OIL & GAS SERVICES",
-        "GAS"
+        "GAS",
+        "PIPELINES",
+        "MATERIALS (CANADIAN) - OIL"
       ]
     }
   },
   {
-    "name": "Mining",
+    "id": "mining",
+    "name": "Mining & Extraction",
     "icon": "fa-wrench",
     "harmful": true,
     "match": {
       "assetType": [
         "GENERAL MINING - UK",
         "GOLD MINING - UK",
-        "MINING"
+        "MACHINERY - CONSTR & MINING",
+        "MINING",
+        "MATERIALS (CANADIAN) - MINING"
       ]
     }
   },
   {
+    "id": "alternative_energy",
     "name": "Alternative Energy",
     "icon": "fa-sun",
     "match": {
@@ -50,6 +59,7 @@
     }
   },
   {
+    "id": "banking",
     "name": "Banking",
     "icon": "fa-credit-card",
     "match": {
@@ -65,6 +75,7 @@
     }
   },
   {
+    "id": "palestine",
     "name": "Palestine Occupation",
     "icon": "fa-flag",
     "harmful": true,
