@@ -52,11 +52,15 @@ export function app (state = initialState, action) {
     case 'SET_ACTIVE_VIEW':
       return Object.assign({}, state, {
         activeViewIndex: action.index,
+        // clear the search term when changing view
+        searchTerm: '',
         visibleAmount: DISPLAY_INCREMENT,
         menuOpen: false
       })
     case 'SET_SEARCH_TERM':
       return Object.assign({}, state, {
+        // If we are on the splash screen, set active view to "all"
+        activeViewIndex: state.activeViewIndex === null ? 0 : state.activeViewIndex,
         searchTerm: action.value,
         visibleAmount: DISPLAY_INCREMENT
       })
