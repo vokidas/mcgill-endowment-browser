@@ -68,14 +68,34 @@ class Asset {
   }
 
   static getSummary (assets) {
-    const summary = {}
+    const summary = []
 
     for (let view of views) {
-      const total = assets.reduce((acc, asset) => {
-        return asset.matchesView(view) ? acc + asset.marketValue : acc
-      }, 0)
+      const origin = { can: 0, us: 0, intl: 0 }
+      const total = 0
+      const totalNoBonds = 0
 
-      summary[view.id] = Object.assign({}, view, { total })
+      const data = assets.reduce(({ origin, total, totalNoBonds }, asset) => {
+        if (asset.matchesView(view)) {
+          if (asset.country === 'Canada') {
+            origin.can += asset.marketValue
+          } else if (asset.country === 'United States') {
+            origin.us += asset.marketValue
+          } else {
+            origin.intl += asset.marketValue
+          }
+
+          if (!asset.isBond()) {
+            totalNoBonds += asset.marketValue
+          }
+
+          total += asset.marketValue
+        }
+
+        return { origin, total, totalNoBonds }
+      }, { origin, total, totalNoBonds })
+
+      summary.push(Object.assign({}, view, data))
     }
 
     return summary

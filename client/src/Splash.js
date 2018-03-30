@@ -1,36 +1,78 @@
 import React from 'react'
-// import { Chart } from 'react-google-charts'
+import { Chart } from 'react-google-charts'
 import Content from './Content'
 import { formatCurrency } from './util'
 
-function SummaryTableRow (props) {
-  const { view } = props
+function SummaryColumnChart (props) {
+  const { views } = props
+
+  const header = ['Country', 'Canadian', 'US', 'International']
+  const data = [header].concat(views.map(v =>
+    [v.name, v.origin.can, v.origin.us, v.origin.intl]
+  ))
+
+  const options = {
+    title: 'Investment total by category and asset origin',
+    legend: 'bottom',
+    isStacked: true
+  }
+
+  const loader = (
+    <div>
+      <i className="fas fa-fw fa-circle-notch fa-spin" />
+      {' Rendering chart...'}
+    </div>
+  )
+
   return (
-    <tr>
-      <td>{view.name}</td>
-      <td>{formatCurrency(view.total)}</td>
-    </tr>
+    <Chart
+      chartType="ColumnChart"
+      data={data}
+      width="100%"
+      options={options}
+      loader={loader}
+    />
   )
 }
 
-function SummaryTable (props) {
-  const { summary } = props
-  const all = summary[0]
-  const views = summary.slice(1)
+function SummaryPieChart (props) {
+  const { all, views } = props
+
+  const other = {
+    name: 'Other',
+    totalNoBonds: all.totalNoBonds - views.reduce((acc, v) =>
+      acc + v.totalNoBonds, 0)
+  }
+
+  const header = ['Category', 'Value']
+  const body = views.concat([other]).map(v => [v.name, v.totalNoBonds])
+  const data = [header].concat(body)
+
+  const options = {
+    title: 'Relative investment total by category, excluding bonds',
+    sliceVisibilityThreshold: 0
+  }
+
+  const loader = (
+    <div>
+      <i className="fas fa-fw fa-circle-notch fa-spin" />
+      {' Rendering chart...'}
+    </div>
+  )
 
   return (
-    <table className="pure-table">
-      <tr>
-        <th>{all.name}</th>
-        <th>{formatCurrency(all.total)}</th>
-      </tr>
-      {views.map(view => <SummaryTableRow view={view} />)}
-    </table>
+    <Chart
+      chartType="PieChart"
+      data={data}
+      width="100%"
+      options={options}
+      loader={loader}
+    />
   )
 }
 
 function SplashContent (props) {
-  const { summary, init } = props
+  const { summary, init, onShellClick } = props
 
   if (init.readyState === 'REQUEST_UNSENT' ||
     init.readyState === 'REQUEST_LOADING') {
@@ -51,14 +93,36 @@ function SplashContent (props) {
     )
   }
 
-  return <SummaryTable summary={summary} />
+  const all = summary[0]
+  const views = summary.slice(1)
+
+  return (
+    <div>
+      <SummaryColumnChart views={views} />
+      <p>
+        {'The approximate total value of McGill\'s investments is '}
+        <span className="bold-value">
+          {formatCurrency(all.total)}
+        </span>
+        {' (excluding cash-equivalent assets), of which about 25% are fixed-income securities (bonds).'}
+      </p>
+      <SummaryPieChart all={all} views={views} />
+      <p>Peruse the categories in the sidebar, or take a look at one of the following companies:</p>
+      <button className="pure-button" onClick={onShellClick}>shell</button>
+      {' '}
+      <button className="pure-button">something else...</button>
+      <p>Investment data current as of March 31, 2017.</p>
+      <p><small>The information presented on this website is the result of both manual and automated data processing that includes data from third-party sources. Despite best efforts, the authors do not guarantee the correctness, reliability, and completeness of the information provided.</small></p>
+    </div>
+  )
 }
 
 function Splash (props) {
   return (
     <Content>
-      <h3>welcome.</h3>
-      <p>The description goes here.</p>
+      <h3>welcome</h3>
+      <p>This is a tool to explore McGill University's investment data, obtained by Divest McGill via Access to Information requests. We have provided something something...</p>
+      <p>According to decarbonizer.io something something...</p>
       <SplashContent {...props} />
     </Content>
   )

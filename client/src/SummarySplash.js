@@ -9,4 +9,11 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Splash)
+const mapDispatchToProps = dispatch => ({
+  onShellClick: () => dispatch({
+    type: 'SET_SEARCH_TERM',
+    value: 'shell'
+  })
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Splash)
