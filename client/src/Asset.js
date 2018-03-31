@@ -1,5 +1,7 @@
 import views from './views.config.json'
 
+const fundRegex = /EQUITY.*FUND/
+
 class Asset {
   constructor (holdings) {
     Object.assign(this, holdings)
@@ -7,6 +9,10 @@ class Asset {
 
   isBond () {
     return this.assetCategory === 'FIXED INCOME SECURITIES'
+  }
+
+  isFund () {
+    return fundRegex.test(this.assetType)
   }
 
   matchesView (view) {
@@ -73,9 +79,9 @@ class Asset {
     for (let view of views) {
       const origin = { can: 0, us: 0, intl: 0 }
       const total = 0
-      const totalNoBonds = 0
+      const totalCompanies = 0
 
-      const data = assets.reduce(({ origin, total, totalNoBonds }, asset) => {
+      const data = assets.reduce(({ origin, total, totalCompanies }, asset) => {
         if (asset.matchesView(view)) {
           if (asset.country === 'Canada') {
             origin.can += asset.marketValue
@@ -85,15 +91,15 @@ class Asset {
             origin.intl += asset.marketValue
           }
 
-          if (!asset.isBond()) {
-            totalNoBonds += asset.marketValue
+          if (!asset.isBond() && !asset.isFund()) {
+            totalCompanies += asset.marketValue
           }
 
           total += asset.marketValue
         }
 
-        return { origin, total, totalNoBonds }
-      }, { origin, total, totalNoBonds })
+        return { origin, total, totalCompanies }
+      }, { origin, total, totalCompanies })
 
       summary.push(Object.assign({}, view, data))
     }

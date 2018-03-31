@@ -40,16 +40,16 @@ function SummaryPieChart (props) {
 
   const other = {
     name: 'Other',
-    totalNoBonds: all.totalNoBonds - views.reduce((acc, v) =>
-      acc + v.totalNoBonds, 0)
+    totalCompanies: all.totalCompanies - views.reduce((acc, v) =>
+      acc + v.totalCompanies, 0)
   }
 
   const header = ['Category', 'Value']
-  const body = views.concat([other]).map(v => [v.name, v.totalNoBonds])
+  const body = views.concat([other]).map(v => [v.name, v.totalCompanies])
   const data = [header].concat(body)
 
   const options = {
-    title: 'Relative investment total by category, excluding bonds',
+    title: 'Investment total by category, excluding bonds and funds',
     sliceVisibilityThreshold: 0
   }
 
@@ -99,13 +99,11 @@ function SplashContent (props) {
   return (
     <div>
       <SummaryColumnChart views={views} />
-      <p>
-        {'The approximate total value of McGill\'s investments is '}
-        <span className="bold-value">
-          {formatCurrency(all.total)}
-        </span>
-        {' (excluding cash-equivalent assets), of which about 25% are fixed-income securities (bonds).'}
-      </p>
+      <p>The approximate total value of McGill's endowment is <span className="bold-value">{formatCurrency(all.total)}</span> (excluding cash-equivalent assets)</p>
+      <ul>
+        <li>25% of the endowment is invested in fixed-income securities (bonds).</li>
+        <li>33% of the endowment is invested in mutual funds.</li>
+      </ul>
       <SummaryPieChart all={all} views={views} />
       <p>Peruse the categories in the sidebar, or take a look at one of the following companies:</p>
       <button className="pure-button" onClick={onShellClick}>shell</button>
@@ -121,7 +119,7 @@ function Splash (props) {
   return (
     <Content>
       <h3>welcome</h3>
-      <p>This is a tool to explore McGill University's investment data, obtained by Divest McGill via Access to Information requests. We have provided something something...</p>
+      <p>The <strong className="secondary-font">mcgill endowment browser</strong> is a tool to explore McGill University's investment data, obtained by Divest McGill via Access to Information requests. We have provided something something...</p>
       <p>According to decarbonizer.io something something...</p>
       <SplashContent {...props} />
     </Content>

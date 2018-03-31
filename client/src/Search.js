@@ -12,7 +12,7 @@ class Search extends Component {
         <label htmlFor="show-bonds" className="pure-checkbox">
           <input id="show-bonds" type="checkbox"
             checked={showBonds} onChange={onShowBondsChange} />
-          {' show bonds'}
+          {' show bonds and funds'}
         </label>
       </form>
     )

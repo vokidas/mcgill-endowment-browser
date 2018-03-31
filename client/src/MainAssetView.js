@@ -11,7 +11,7 @@ function getFilteredAssets (state) {
 
   return assets.filter(asset =>
     asset.matchesView(view) && asset.matchesSearchTerms(terms) &&
-      (showBonds || !asset.isBond())
+      (showBonds || (!asset.isBond() && !asset.isFund()))
   )
 }
 

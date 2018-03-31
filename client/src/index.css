@@ -9,6 +9,7 @@
 }
 
 .pure-g [class*=pure-u],
+.secondary-font,
 .card-link,
 .card-holding-item {
   font-family: Montserrat, sans-serif;
