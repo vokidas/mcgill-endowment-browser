@@ -5,11 +5,10 @@
   "author": "Igor Sadikov",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.15.3",
+    "express": "^4.16.3",
     "googleapis": "^21.3.0",
-    "jsdom": "^11.2.0",
-    "node-cache": "^4.1.1",
-    "sqlite3": "^3.1.9"
+    "node-cache": "^4.2.0",
+    "sqlite3": "^3.1.13"
   },
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
@@ -20,14 +19,14 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
-    "concurrently": "^3.5.0",
-    "eslint": "^4.5.0",
+    "concurrently": "^3.5.1",
+    "eslint": "^4.19.1",
     "eslint-config-standard": "^10.2.1",
     "eslint-config-standard-react": "^5.0.0",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-node": "^5.1.1",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-react": "^7.3.0",
+    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-react": "^7.7.0",
     "eslint-plugin-standard": "^3.0.1"
   },
   "eslintIgnore": [
