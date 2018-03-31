@@ -31,7 +31,7 @@ function CardContentNews (props) {
     <div className="card-content">
       <i className="fas fa-fw fa-globe" />
       {' In the news \u00b7 '}
-      {values.map(renderItem)}
+      {values.map(renderItem).map(e => [' ', e])}
     </div>
   )
 }
