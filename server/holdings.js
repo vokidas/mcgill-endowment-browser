@@ -2,28 +2,28 @@ const sheets = require('./sheets')
 const settings = require('./settings')
 const cache = require('./cache')
 
-const exchanges = {
-  'Australia': 'ASX',
-  'Belgium': 'EBR',
-  'Bermuda': 'BSX',
-  'Canada': 'TSE',
-  'Cayman Islands': 'CSX',
-  'Denmark': 'CPH',
-  'Finland': 'HEL',
-  'France': 'EPA',
-  'Germany': 'ETR',
-  'Hong Kong': 'HKG',
-  'Ireland': 'ISE',
-  'Israel': 'TLV',
-  'Italy': 'BIT',
-  'Japan': 'TYO',
-  'Luxemburg': 'EPA',
-  'Netherlands': 'AMS',
-  'New Zealand': 'NZE',
-  'Portugal': 'ELI',
-  'Spain': 'BME',
-  'Sweden': 'STO',
-  'United Kingdom': 'LON'
+const suffixes = {
+  'Australia': 'AX',
+  'Belgium': 'BR',
+  'Bermuda': 'L',
+  'Canada': 'TO',
+  'Denmark': 'CO',
+  'Finland': 'HE',
+  'France': 'PA',
+  'Germany': 'DE',
+  'Hong Kong': 'HK', // pad to 4 digits
+  'Israel': 'TA',
+  'Italy': 'MI',
+  'Japan': 'T',
+  'Luxemburg': 'F',
+  'Netherlands': 'AS',
+  'New Zealand': 'NZ',
+  'Norway': 'OL',
+  'Portugal': 'LS',
+  'Spain': 'MC',
+  'Sweden': 'ST',
+  'Switzerland': 'VX',
+  'United Kingdom': 'L'
 }
 
 async function getRaw () {
@@ -56,13 +56,20 @@ function groupingReducer (grouped, holding) {
 }
 
 function searchableTicker (holding) {
-  const { ticker, country, description1 } = holding
+  let { ticker, country } = holding
 
-  if (country === 'Singapore' || country === 'Norway') {
-    // tickers are wrong, search by name
-    return description1
-  } else if (exchanges[country]) {
-    return `${exchanges[country]}:${ticker}`
+  // for Canadian tickers like BAM/A
+  ticker = ticker.replace('/', '-')
+
+  // pad numeric tickers
+  if (!isNaN(ticker)) {
+    while (ticker.length < 4) {
+      ticker = '0' + ticker
+    }
+  }
+
+  if (suffixes[country]) {
+    return `${ticker}.${suffixes[country]}`
   }
 
   return ticker

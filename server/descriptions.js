@@ -1,12 +1,14 @@
 const https = require('https')
-const jsdom = require('jsdom')
 const cache = require('./cache')
+
+const re = /^root\.App\.main = (.*);$/m
 
 function fetchSingle (ticker) {
   return new Promise((resolve, reject) => {
-    https.get(`https://finance.google.ca/finance?q=${ticker}`, res => {
+    const url = `https://finance.yahoo.com/quote/${ticker}`
+    https.get(url, res => {
       if (res.statusCode !== 200) {
-        console.error(new Error(res.statusMessage))
+        console.error(`Failed to fetch ${url}: ${res.statusMessage}`)
         return resolve(null)
       }
 
@@ -14,9 +16,17 @@ function fetchSingle (ticker) {
 
       res.on('data', chunk => { data += chunk })
       res.on('end', () => {
-        const dom = new jsdom.JSDOM(data)
-        const el = dom.window.document.querySelector('.companySummary')
-        const description = el && el.firstChild.textContent.trim()
+        const match = re.exec(data)
+        let description = null
+
+        if (match !== null) {
+          try {
+            const obj = JSON.parse(match[1])
+            description = obj.context.dispatcher.stores.QuoteSummaryStore.summaryProfile.longBusinessSummary
+          } catch (err) {
+            console.error(`Failed to fetch ${url}`, err)
+          }
+        }
 
         resolve(cache.set(`description-${ticker}`, description))
       })

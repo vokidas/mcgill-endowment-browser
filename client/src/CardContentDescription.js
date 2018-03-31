@@ -38,8 +38,8 @@ function CardContentDescription (props) {
     <div className="card-content">
       <i className="fas fa-fw fa-info-circle" />
       {' ' + value + '... '}
-      <CardLink href={`https://finance.google.ca/finance?q=${ticker}`}>
-        Google Finance
+      <CardLink href={`https://finance.yahoo.com/quote/${ticker}`}>
+        Yahoo Finance
       </CardLink>
     </div>
   )
