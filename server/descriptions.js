@@ -9,7 +9,7 @@ function fetchSingle (ticker) {
     https.get(url, res => {
       if (res.statusCode !== 200) {
         console.error(`Failed to fetch ${url}: ${res.statusMessage}`)
-        return resolve(null)
+        return resolve(cache.set(`description-${ticker}`, null, 600))
       }
 
       let data = ''
@@ -28,7 +28,7 @@ function fetchSingle (ticker) {
           }
         }
 
-        resolve(cache.set(`description-${ticker}`, description))
+        resolve(cache.set(`description-${ticker}`, description, 0))
       })
     })
   })

@@ -1,7 +1,6 @@
 const NodeCache = require('node-cache')
 
 const cache = new NodeCache({
-  stdTTL: 600,
   useClones: false
 })
 
@@ -20,8 +19,12 @@ function get (key) {
   })
 }
 
-function set (key, value) {
-  cache.set(key, value, err => err && console.error(err))
+function set (key, value, ttl) {
+  if (typeof ttl === 'undefined') {
+    ttl = 600
+  }
+
+  cache.set(key, value, ttl, err => err && console.error(err))
   return value
 }
 
