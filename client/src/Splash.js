@@ -72,7 +72,7 @@ function SummaryPieChart (props) {
 }
 
 function SplashContent (props) {
-  const { summary, init, onShellClick } = props
+  const { summary, init, onCompanyClick } = props
 
   if (init.readyState === 'REQUEST_UNSENT' ||
     init.readyState === 'REQUEST_LOADING') {
@@ -98,17 +98,20 @@ function SplashContent (props) {
 
   return (
     <div>
+      <p>Here is an overview of the endowment:</p>
       <SummaryColumnChart views={views} />
-      <p>The approximate total value of McGill's endowment is <span className="bold-value">{formatCurrency(all.total)}</span> (excluding cash-equivalent assets)</p>
+      <p>The approximate total value of McGill's endowment is <span className="bold-value">{formatCurrency(all.total)}</span> (excluding cash-equivalent assets).</p>
       <ul>
         <li>25% of the endowment is invested in fixed-income securities (bonds).</li>
         <li>33% of the endowment is invested in mutual funds.</li>
       </ul>
       <SummaryPieChart all={all} views={views} />
       <p>Peruse the categories in the sidebar, or take a look at one of the following companies:</p>
-      <button className="pure-button" onClick={onShellClick}>shell</button>
+      <button className="pure-button" onClick={() => onCompanyClick('shell')}>shell</button>
       {' '}
-      <button className="pure-button">something else...</button>
+      <button className="pure-button" onClick={() => onCompanyClick('bhp')}>bhp</button>
+      {' '}
+      <button className="pure-button" onClick={() => onCompanyClick('rio tinto')}>rio tinto</button>
       <p>Investment data current as of March 31, 2017.</p>
       <p><small>The information presented on this website is the result of both manual and automated data processing that includes data from third-party sources. Despite best efforts, the authors do not guarantee the correctness, reliability, and completeness of the information provided.</small></p>
     </div>
@@ -118,9 +121,8 @@ function SplashContent (props) {
 function Splash (props) {
   return (
     <Content>
-      <h3>welcome</h3>
-      <p>The <strong className="secondary-font">mcgill endowment browser</strong> is a tool to explore McGill University's investment data, obtained by Divest McGill via Access to Information requests. We have provided something something...</p>
-      <p>According to decarbonizer.io something something...</p>
+      <p>The <strong className="secondary-font">mcgill endowment browser</strong> is a tool to explore McGill University's investment data, obtained by Divest McGill via Access to Information requests.</p>
+      <p>We have organized the endowment into several categories of interest, putting into focusing the investments that we do not consider socially and environmentally responsible. Contextual information about each company and links to further research are provided where available.</p>
       <SplashContent {...props} />
     </Content>
   )

@@ -10,9 +10,9 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onShellClick: () => dispatch({
+  onCompanyClick: (value) => dispatch({
     type: 'SET_SEARCH_TERM',
-    value: 'shell'
+    value
   })
 })
 

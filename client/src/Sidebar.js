@@ -38,7 +38,7 @@ function Sidebar (props) {
             </a>
           </li>
           <li className="pure-menu-item">
-            <a href="https://github.com/vokidas/mcgill-endowment-browser" target="_blank" className="pure-menu-link">
+            <a href="https://github.com/goldenlentils/mcgill-endowment-browser" target="_blank" className="pure-menu-link">
               View source on Github
             </a>
           </li>

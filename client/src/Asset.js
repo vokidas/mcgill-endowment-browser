@@ -1,6 +1,6 @@
 import views from './views.config.json'
 
-const fundRegex = /EQUITY.*FUND/
+const fundRegex = /EQUITY.*FUND|\bETF\b/
 
 class Asset {
   constructor (holdings) {
