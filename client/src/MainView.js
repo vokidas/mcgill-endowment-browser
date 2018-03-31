@@ -13,6 +13,11 @@ function renderLoadMore (onLoadMoreClick) {
 }
 
 class MainView extends Component {
+  constructor (props) {
+    super(props)
+    props.onWillReceiveProps(props)
+  }
+
   componentWillReceiveProps (nextProps) {
     this.props.onWillReceiveProps(nextProps)
   }
