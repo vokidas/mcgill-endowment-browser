@@ -100,10 +100,10 @@ function SplashContent (props) {
     <div>
       <p>Here is an overview of the endowment:</p>
       <SummaryColumnChart views={views} />
-      <p>The approximate total value of McGill's endowment is <span className="bold-value">{formatCurrency(all.total)}</span> (excluding cash-equivalent assets).</p>
+      <p>The approximate total value of McGill's endowment is <span className="bold-value">{formatCurrency(all.total)}</span>, excluding cash-equivalent assets such as foreign currency and alternative (non-stock) investments such as real estate.</p>
       <ul>
-        <li>25% of the endowment is invested in fixed-income securities (bonds).</li>
-        <li>33% of the endowment is invested in mutual funds.</li>
+        <li>25% of this amount is invested in fixed-income securities (bonds).</li>
+        <li>33% of this amount is invested in mutual funds.</li>
       </ul>
       <SummaryPieChart all={all} views={views} />
       <p>Peruse the categories in the sidebar, or take a look at one of the following companies:</p>
@@ -112,7 +112,7 @@ function SplashContent (props) {
       <button className="pure-button" onClick={() => onCompanyClick('bhp')}>bhp</button>
       {' '}
       <button className="pure-button" onClick={() => onCompanyClick('rio tinto')}>rio tinto</button>
-      <p>Investment data current as of March 31, 2017.</p>
+      <p>Investment data current as of March 31, 2018.</p>
       <p><small>The information presented on this website is the result of both manual and automated data processing that includes data from third-party sources. Despite best efforts, the authors do not guarantee the correctness, reliability, and completeness of the information provided.</small></p>
     </div>
   )
