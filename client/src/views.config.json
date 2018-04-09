@@ -28,6 +28,7 @@
         "OIL & GAS",
         "OIL & GAS SERVICES",
         "GAS",
+        "GAS DISTRIBUTION - UK",
         "PIPELINES",
         "MATERIALS (CANADIAN) - OIL"
       ]
@@ -60,17 +61,23 @@
   },
   {
     "id": "banking",
-    "name": "Banking",
+    "name": "Banking and Financials",
     "icon": "fa-credit-card",
     "match": {
       "assetType": [
         "BANKS",
         "BANKS - UK",
         "BANKS (CANADIAN)",
+        "BANKING & FINANCE",
+        "DIVERSIFIED FINANCIAL SERVICES",
+        "DIVERSIFIED FINANCIALS (CANADIAN)",
         "SAVINGS & LOANS",
+        "MORTGAGES (CANADIAN)",
+        "NON-US CORP BANKING & FINANCE",
         "CONSUMER FINANCE - UK",
         "INVESTMENT COMPANIES",
-        "INVESTMENT SERVICES - UK"
+        "INVESTMENT SERVICES - UK",
+        "OTHER FINANCIAL SERVICES (CANADIAN)"
       ]
     }
   },
