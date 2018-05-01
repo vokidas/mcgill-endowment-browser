@@ -1,10 +1,9 @@
 const sheets = require('./sheets')
-const settings = require('./settings')
 const cache = require('./cache')
 
 async function getRaw () {
-  const spreadsheetId = await settings.get('metadata-spreadsheet-id')
-  const sheetName = await settings.get('metadata-sheet-name')
+  const spreadsheetId = process.env.metadata_spreadsheet_id
+  const sheetName = process.env.metadata_sheet_name
 
   return sheets.getValues(spreadsheetId, sheetName)
 }

@@ -1,5 +1,4 @@
 const sheets = require('./sheets')
-const settings = require('./settings')
 const cache = require('./cache')
 
 const suffixes = {
@@ -27,8 +26,8 @@ const suffixes = {
 }
 
 async function getRaw () {
-  const spreadsheetId = await settings.get('raw-spreadsheet-id')
-  const sheetName = await settings.get('raw-sheet-name')
+  const spreadsheetId = process.env.raw_spreadsheet_id
+  const sheetName = process.env.raw_sheet_name
 
   return sheets.getValues(spreadsheetId, sheetName)
 }

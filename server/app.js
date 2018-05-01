@@ -1,9 +1,11 @@
 const express = require('express')
+const dotenvJson = require('dotenv-json')
 const holdings = require('./holdings')
 const metadata = require('./metadata')
 const descriptions = require('./descriptions')
 
 const app = express()
+dotenvJson()
 
 function error (err, res) {
   console.error(err)

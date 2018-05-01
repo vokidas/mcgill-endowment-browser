@@ -6,8 +6,8 @@
     "purecss": "^1.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-google-charts": "^1.5.5",
-    "react-redux": "^5.0.6",
+    "react-google-charts": "^1.5.7",
+    "react-redux": "^5.0.7",
     "react-scripts": "1.0.12",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"

@@ -1,12 +1,11 @@
 const google = require('googleapis')
-const settings = require('./settings')
 const cache = require('./cache')
 
 const sheets = google.sheets('v4')
 
 async function authorize () {
-  const email = await settings.get('google-client-email')
-  const key = await settings.get('google-private-key')
+  const email = process.env.google_client_email
+  const key = process.env.google_private_key
 
   const authClient = new google.auth.JWT(email, null, key,
     [ 'https://www.googleapis.com/auth/spreadsheets.readonly' ])

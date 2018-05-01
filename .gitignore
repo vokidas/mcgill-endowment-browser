@@ -1,5 +1,4 @@
-*.db
-/seed-db.js
+.env.json
 /node_modules
 npm-debug.log*
 *.sublime-project
