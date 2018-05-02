@@ -39,6 +39,15 @@ app.get('/api/metadata', (req, res) => {
     .catch(err => error(err, res))
 })
 
+app.get('/api/metadata/csv', (req, res) => {
+  metadata.getCsv()
+    .then(values => {
+      res.setHeader('Content-disposition', 'attachment; filename=metadata.csv')
+      res.send(values)
+    })
+    .catch(err => error(err, res))
+})
+
 app.get('/api/descriptions', (req, res) => {
   descriptions.get(req.query.tickers.split(','))
     .then(obj => res.json(obj))

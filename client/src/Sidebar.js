@@ -23,7 +23,7 @@ function Sidebar (props) {
         </a>
         <a href="#" className="header-link"
           onClick={onHeaderClick}>
-          McGill Endowment Browser
+          mcgillinvests.in
         </a>
       </header>
       <nav className="pure-menu">
@@ -38,7 +38,7 @@ function Sidebar (props) {
             </a>
           </li>
           <li className="pure-menu-item">
-            <a href="https://github.com/goldenlentils/mcgill-endowment-browser" target="_blank" className="pure-menu-link">
+            <a href="https://github.com/goldenlentils/mcgill-endowment-browser" target="_blank" className="pure-menu-link" rel="noopener noreferrer">
               View source on Github
             </a>
           </li>
