@@ -34,7 +34,12 @@ function Sidebar (props) {
         <ul className="pure-menu-list">
           <li className="pure-menu-item">
             <a href="/api/holdings/csv" className="pure-menu-link">
-              Download data as .csv
+              Download data as CSV
+            </a>
+          </li>
+          <li className="pure-menu-item">
+            <a href="mailto:info@mcgillinvests.in" className="pure-menu-link">
+              Email maintainers
             </a>
           </li>
           <li className="pure-menu-item">
