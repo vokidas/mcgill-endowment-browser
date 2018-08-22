@@ -13,7 +13,6 @@
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "node server/app.js",
     "client": "node start-client.js",
-    "setup": "node setup-db.js",
     "lint": "eslint ."
   },
   "devDependencies": {

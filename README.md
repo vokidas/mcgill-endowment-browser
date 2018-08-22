@@ -27,9 +27,9 @@ Some setup is required if you wish to run your own version:
 8. Share the raw data and metadata Google Sheets spreadsheets with the service account.
 
 9. Install the dependencies with Node.js:
-    
-    `npm install && cd client && npm install`
+
+    `yarn && cd client && yarn`
 
 10. Run the application:
-        
-    `npm start`
+
+    `yarn start`
