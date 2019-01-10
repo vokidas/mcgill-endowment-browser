@@ -42,11 +42,6 @@ function Sidebar (props) {
               Email maintainers
             </a>
           </li>
-          <li className="pure-menu-item">
-            <a href="https://github.com/goldenlentils/mcgill-endowment-browser" target="_blank" className="pure-menu-link" rel="noopener noreferrer">
-              View source on Github
-            </a>
-          </li>
         </ul>
       </nav>
     </aside>
