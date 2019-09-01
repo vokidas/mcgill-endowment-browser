@@ -11,6 +11,8 @@
     "harmful": true,
     "match": {
       "assetType": [
+        "AEROSPACE - UK",
+        "AEROSPACE & DEFENSE",
         "AEROSPACE/DEFENSE",
         "DEFENSE - UK"
       ]
@@ -30,7 +32,10 @@
         "GAS",
         "GAS DISTRIBUTION - UK",
         "PIPELINES",
-        "MATERIALS (CANADIAN) - OIL"
+        "MATERIALS (CANADIAN) - OIL",
+        "NATURAL RESOURCES (CANADIAN)",
+        "OTHER UTILITIES (CANADIAN) - OIL & GAS",
+        "UTILITY - GAS"
       ]
     }
   },
@@ -45,7 +50,8 @@
         "GOLD MINING - UK",
         "MACHINERY - CONSTR & MINING",
         "MINING",
-        "MATERIALS (CANADIAN) - MINING"
+        "MATERIALS (CANADIAN) - MINING",
+        "MATERIALS (CANADIAN) - OIL & GAS"
       ]
     }
   },
@@ -66,6 +72,7 @@
     "match": {
       "assetType": [
         "BANKS",
+        "BANKS - COVERED (CANADIAN)",
         "BANKS - UK",
         "BANKS (CANADIAN)",
         "BANKING & FINANCE",
@@ -77,7 +84,11 @@
         "CONSUMER FINANCE - UK",
         "INVESTMENT COMPANIES",
         "INVESTMENT SERVICES - UK",
-        "OTHER FINANCIAL SERVICES (CANADIAN)"
+        "OTHER FINANCIAL SERVICES (CANADIAN)",
+        "NHA (CANADIAN)",
+        "PREFERRED STOCK - BANKING & FINANCE",
+        "PRIVATE PLACEMENTS - BANKING",
+        "SPECIALTY FINANCE - UK"
       ]
     }
   },

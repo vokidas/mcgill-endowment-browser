@@ -112,7 +112,7 @@ function SplashContent (props) {
       <button className="pure-button" onClick={() => onCompanyClick('bhp')}>bhp</button>
       {' '}
       <button className="pure-button" onClick={() => onCompanyClick('rio tinto')}>rio tinto</button>
-      <p>Investment data current as of March 31, 2018.</p>
+      <p>Investment data current as of March 31, 2019.</p>
       <p><small>The information presented on this website is the result of both manual and automated data processing that includes data from third-party sources. Despite best efforts, the authors do not guarantee the correctness, reliability, and completeness of the information provided.</small></p>
     </div>
   )
